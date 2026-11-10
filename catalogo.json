@@ -1,0 +1,374 @@
+{
+ "tienda": "Wets",
+ "url": "https://mrkardona.github.io/wets/",
+ "pais": "CO",
+ "moneda": "COP",
+ "actualizado": "2026-11-10",
+ "muestra": true,
+ "pago": "Contraentrega (efectivo al recibir)",
+ "envio": {
+  "costo": 0,
+  "dias_habiles": [
+   2,
+   5
+  ]
+ },
+ "descuento_por_cantidad": [
+  {
+   "desde_unidades": 3,
+   "porcentaje": 10
+  },
+  {
+   "desde_unidades": 2,
+   "porcentaje": 5
+  }
+ ],
+ "devolucion_dias": 30,
+ "productos": [
+  {
+   "id": "creatina-monohidratada-optimum-nutrition-300g",
+   "nombre": "Creatina Monohidratada Micronizada",
+   "marca": "Optimum Nutrition",
+   "categoria": "suplementos",
+   "presentacion": "300 g · 60 porciones",
+   "precio": 129900,
+   "precio_antes": 149900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-03",
+   "url": "https://mrkardona.github.io/wets/p/creatina-monohidratada-optimum-nutrition-300g/",
+   "descripcion": "Creatina monohidratada pura, micronizada para que se disuelva fácil. Sin sabor, sin azúcar y sin rellenos.",
+   "uso": "1 cucharada (5 g) al día mezclada en agua o en tu batido. Se toma todos los días, entrenes o no.",
+   "datos": [
+    "5 g de creatina por porción",
+    "Sin sabor",
+    "60 porciones"
+   ]
+  },
+  {
+   "id": "gold-standard-whey-optimum-nutrition-2lb",
+   "nombre": "Gold Standard 100% Whey Chocolate",
+   "marca": "Optimum Nutrition",
+   "categoria": "suplementos",
+   "presentacion": "2 lb · 29 porciones",
+   "precio": 189900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2027-11",
+   "url": "https://mrkardona.github.io/wets/p/gold-standard-whey-optimum-nutrition-2lb/",
+   "descripcion": "Proteína de suero con aislado como ingrediente principal. 24 g de proteína por porción, sabor Double Rich Chocolate.",
+   "uso": "1 scoop en 180 a 240 ml de agua o leche, después de entrenar o entre comidas.",
+   "datos": [
+    "24 g de proteína por porción",
+    "5,5 g de BCAA",
+    "Sabor chocolate"
+   ]
+  },
+  {
+   "id": "magnesio-glicinato-doctors-best-240",
+   "nombre": "Magnesio Glicinato Alta Absorción",
+   "marca": "Doctor's Best",
+   "categoria": "suplementos",
+   "presentacion": "240 tabletas",
+   "precio": 109900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-06",
+   "url": "https://mrkardona.github.io/wets/p/magnesio-glicinato-doctors-best-240/",
+   "descripcion": "Magnesio quelado en forma de glicinato lisinato, la presentación más buscada por su buena tolerancia.",
+   "uso": "2 tabletas al día con comida. Mucha gente lo prefiere en la noche.",
+   "datos": [
+    "200 mg de magnesio por porción",
+    "Quelado TRAACS",
+    "Vegano, sin gluten"
+   ]
+  },
+  {
+   "id": "ashwagandha-now-foods-450mg-90",
+   "nombre": "Ashwagandha Extracto 450 mg",
+   "marca": "NOW Foods",
+   "categoria": "suplementos",
+   "presentacion": "90 cápsulas",
+   "precio": 89900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-01",
+   "url": "https://mrkardona.github.io/wets/p/ashwagandha-now-foods-450mg-90/",
+   "descripcion": "Extracto estandarizado de raíz de ashwagandha (Withania somnifera) en cápsula vegetal.",
+   "uso": "1 cápsula 2 o 3 veces al día, según la etiqueta del fabricante.",
+   "datos": [
+    "450 mg por cápsula",
+    "Estandarizado a withanólidos",
+    "Cápsula vegetal"
+   ]
+  },
+  {
+   "id": "omega-3-nordic-naturals-ultimate-omega-60",
+   "nombre": "Ultimate Omega sabor limón",
+   "marca": "Nordic Naturals",
+   "categoria": "suplementos",
+   "presentacion": "60 cápsulas blandas",
+   "precio": 139900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2027-09",
+   "url": "https://mrkardona.github.io/wets/p/omega-3-nordic-naturals-ultimate-omega-60/",
+   "descripcion": "Aceite de pescado concentrado en EPA y DHA, purificado y con sabor a limón para evitar el regusto.",
+   "uso": "2 cápsulas al día con comida.",
+   "datos": [
+    "1280 mg de omega-3 por porción",
+    "Forma de triglicéridos",
+    "Probado por terceros"
+   ]
+  },
+  {
+   "id": "vitamina-d3-k2-sports-research-60",
+   "nombre": "Vitamina D3 + K2 con aceite de coco",
+   "marca": "Sports Research",
+   "categoria": "suplementos",
+   "presentacion": "60 cápsulas blandas",
+   "precio": 99900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-02",
+   "url": "https://mrkardona.github.io/wets/p/vitamina-d3-k2-sports-research-60/",
+   "descripcion": "Vitamina D3 de origen vegetal con K2 (MK-7) en aceite de coco. Una cápsula pequeña al día.",
+   "uso": "1 cápsula al día con una comida que tenga grasa.",
+   "datos": [
+    "D3 5000 UI",
+    "K2 MK-7 100 mcg",
+    "Vegana, sin OGM"
+   ]
+  },
+  {
+   "id": "vitamina-c-1000-now-foods-100",
+   "nombre": "Vitamina C-1000 con escaramujo",
+   "marca": "NOW Foods",
+   "categoria": "suplementos",
+   "presentacion": "100 tabletas",
+   "precio": 74900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-04",
+   "url": "https://mrkardona.github.io/wets/p/vitamina-c-1000-now-foods-100/",
+   "descripcion": "1000 mg de vitamina C por tableta, de liberación sostenida, con escaramujo.",
+   "uso": "1 tableta al día con comida.",
+   "datos": [
+    "1000 mg por tableta",
+    "Liberación sostenida",
+    "Vegana"
+   ]
+  },
+  {
+   "id": "multivitaminico-nature-made-130",
+   "nombre": "Multivitamínico Completo",
+   "marca": "Nature Made",
+   "categoria": "suplementos",
+   "presentacion": "130 tabletas",
+   "precio": 94900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2027-12",
+   "url": "https://mrkardona.github.io/wets/p/multivitaminico-nature-made-130/",
+   "descripcion": "23 vitaminas y minerales esenciales en una tableta diaria. Verificado por USP.",
+   "uso": "1 tableta al día con agua y comida.",
+   "datos": [
+    "23 nutrientes",
+    "Verificado USP",
+    "Sin colorantes artificiales"
+   ]
+  },
+  {
+   "id": "colageno-vital-proteins-peptides-284g",
+   "nombre": "Collagen Peptides sin sabor",
+   "marca": "Vital Proteins",
+   "categoria": "suplementos",
+   "presentacion": "284 g · 14 porciones",
+   "precio": 159900,
+   "precio_antes": 174900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-05",
+   "url": "https://mrkardona.github.io/wets/p/colageno-vital-proteins-peptides-284g/",
+   "descripcion": "Péptidos de colágeno bovino hidrolizado. Se disuelve en frío o en caliente y no cambia el sabor.",
+   "uso": "1 a 2 scoops al día en café, batidos o agua.",
+   "datos": [
+    "20 g de colágeno por porción",
+    "Tipos I y III",
+    "Sin sabor"
+   ]
+  },
+  {
+   "id": "limpiador-hidratante-cerave-473ml",
+   "nombre": "Hydrating Facial Cleanser",
+   "marca": "CeraVe",
+   "categoria": "skincare",
+   "presentacion": "473 ml",
+   "precio": 89900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-07",
+   "url": "https://mrkardona.github.io/wets/p/limpiador-hidratante-cerave-473ml/",
+   "descripcion": "Limpiador en crema para piel normal a seca. Limpia sin espuma y sin dejar la piel tirante.",
+   "uso": "Mañana y noche: masajea sobre la piel húmeda y enjuaga.",
+   "datos": [
+    "3 ceramidas esenciales",
+    "Ácido hialurónico",
+    "Sin fragancia"
+   ]
+  },
+  {
+   "id": "limpiador-espumoso-cerave-473ml",
+   "nombre": "Foaming Facial Cleanser",
+   "marca": "CeraVe",
+   "categoria": "skincare",
+   "presentacion": "473 ml",
+   "precio": 89900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-07",
+   "url": "https://mrkardona.github.io/wets/p/limpiador-espumoso-cerave-473ml/",
+   "descripcion": "Limpiador en gel espumoso para piel normal a grasa. Retira el exceso de sebo sin resecar.",
+   "uso": "Mañana y noche: haz espuma con agua, masajea y enjuaga.",
+   "datos": [
+    "3 ceramidas esenciales",
+    "Niacinamida",
+    "Sin fragancia"
+   ]
+  },
+  {
+   "id": "niacinamida-the-ordinary-30ml",
+   "nombre": "Niacinamide 10% + Zinc 1%",
+   "marca": "The Ordinary",
+   "categoria": "skincare",
+   "presentacion": "30 ml",
+   "precio": 64900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-02",
+   "url": "https://mrkardona.github.io/wets/p/niacinamida-the-ordinary-30ml/",
+   "descripcion": "Sérum de niacinamida al 10% con zinc. Textura ligera a base de agua, el clásico para piel con brillo.",
+   "uso": "Unas gotas mañana y noche, después de limpiar y antes de la crema.",
+   "datos": [
+    "Niacinamida 10%",
+    "Zinc PCA 1%",
+    "Sin alcohol ni aceites"
+   ]
+  },
+  {
+   "id": "acido-hialuronico-the-ordinary-30ml",
+   "nombre": "Hyaluronic Acid 2% + B5",
+   "marca": "The Ordinary",
+   "categoria": "skincare",
+   "presentacion": "30 ml",
+   "precio": 69900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-03",
+   "url": "https://mrkardona.github.io/wets/p/acido-hialuronico-the-ordinary-30ml/",
+   "descripcion": "Sérum hidratante con ácido hialurónico de varios pesos moleculares y vitamina B5.",
+   "uso": "Unas gotas sobre la piel ligeramente húmeda, mañana y noche, antes de la crema.",
+   "datos": [
+    "Ácido hialurónico 2%",
+    "Vitamina B5",
+    "Para todo tipo de piel"
+   ]
+  },
+  {
+   "id": "serum-vitamina-c-truskin-30ml",
+   "nombre": "Vitamin C Facial Serum",
+   "marca": "TruSkin",
+   "categoria": "skincare",
+   "presentacion": "30 ml",
+   "precio": 119900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2027-10",
+   "url": "https://mrkardona.github.io/wets/p/serum-vitamina-c-truskin-30ml/",
+   "descripcion": "Sérum de vitamina C con ácido hialurónico y vitamina E para el paso de la mañana.",
+   "uso": "3 a 5 gotas en la mañana sobre la piel limpia. Termina siempre con protector solar.",
+   "datos": [
+    "Vitamina C",
+    "Ácido hialurónico",
+    "Vitamina E"
+   ]
+  },
+  {
+   "id": "retinol-the-ordinary-05-escualano-30ml",
+   "nombre": "Retinol 0.5% in Squalane",
+   "marca": "The Ordinary",
+   "categoria": "skincare",
+   "presentacion": "30 ml",
+   "precio": 74900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2027-12",
+   "url": "https://mrkardona.github.io/wets/p/retinol-the-ordinary-05-escualano-30ml/",
+   "descripcion": "Retinol al 0,5% en base de escualano. Concentración intermedia para quien ya conoce el ingrediente.",
+   "uso": "Solo de noche. Empieza 2 noches por semana y sube poco a poco. Usa protector solar al día siguiente.",
+   "datos": [
+    "Retinol 0,5%",
+    "Base de escualano",
+    "Uso nocturno"
+   ]
+  },
+  {
+   "id": "exfoliante-bha-paulas-choice-118ml",
+   "nombre": "Skin Perfecting 2% BHA Liquid Exfoliant",
+   "marca": "Paula's Choice",
+   "categoria": "skincare",
+   "presentacion": "118 ml",
+   "precio": 169900,
+   "precio_antes": 184900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-01",
+   "url": "https://mrkardona.github.io/wets/p/exfoliante-bha-paulas-choice-118ml/",
+   "descripcion": "Exfoliante líquido con ácido salicílico al 2%. Se deja en la piel, no se enjuaga.",
+   "uso": "Aplica con un algodón o con los dedos después de limpiar. Empieza día de por medio.",
+   "datos": [
+    "Ácido salicílico 2%",
+    "Sin fragancia",
+    "No se enjuaga"
+   ]
+  },
+  {
+   "id": "crema-hidratante-cerave-453g",
+   "nombre": "Moisturizing Cream",
+   "marca": "CeraVe",
+   "categoria": "skincare",
+   "presentacion": "453 g",
+   "precio": 119900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2028-08",
+   "url": "https://mrkardona.github.io/wets/p/crema-hidratante-cerave-453g/",
+   "descripcion": "Crema hidratante rica para rostro y cuerpo. Textura densa que no se siente grasosa.",
+   "uso": "Aplica mañana y noche como último paso antes del protector solar.",
+   "datos": [
+    "3 ceramidas esenciales",
+    "Ácido hialurónico",
+    "Sin fragancia"
+   ]
+  },
+  {
+   "id": "protector-solar-la-roche-posay-anthelios-spf60",
+   "nombre": "Anthelios Melt-in Milk SPF 60",
+   "marca": "La Roche-Posay",
+   "categoria": "skincare",
+   "presentacion": "150 ml",
+   "precio": 149900,
+   "disponible": true,
+   "origen": "Estados Unidos",
+   "vence": "2027-08",
+   "url": "https://mrkardona.github.io/wets/p/protector-solar-la-roche-posay-anthelios-spf60/",
+   "descripcion": "Protector solar de amplio espectro SPF 60 para rostro y cuerpo. Se absorbe rápido y no deja blanco.",
+   "uso": "Cada mañana como último paso. Reaplica cada 2 horas si estás al sol.",
+   "datos": [
+    "SPF 60 de amplio espectro",
+    "Resistente al agua 80 min",
+    "Sin fragancia"
+   ]
+  }
+ ]
+}

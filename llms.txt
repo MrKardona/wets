@@ -1,0 +1,47 @@
+# Wets
+
+> Wets es una tienda en línea colombiana de suplementos dietarios y productos para el cuidado de la piel (skincare) 100% originales, importados de Estados Unidos. Vende a toda Colombia con envío gratis y pago contraentrega (el cliente paga en efectivo al recibir).
+
+Nota: catálogo de muestra. Los precios y fechas son de ejemplo hasta que la tienda publique su inventario real.
+
+## Cómo se compra
+
+- Pago: contraentrega, en efectivo al recibir, según cobertura de la transportadora en el municipio
+- Envío: gratis a toda Colombia, entrega en 2 a 5 días hábiles
+- Descuento por cantidad: 5% llevando 2 productos, 10% llevando 3 o más productos
+- Cambios y devoluciones: 30 días desde la entrega; retracto legal de 5 días hábiles
+- Originalidad: productos comprados en Estados Unidos, sellados de fábrica, con lote y vencimiento visibles; devolución del 100% si no es original
+- Pedido: formulario "Pedir y pagar al recibir" en cada producto, sin crear cuenta
+- Moneda: pesos colombianos (COP)
+
+## Suplementos
+
+- [Creatina Monohidratada Micronizada · Optimum Nutrition](https://mrkardona.github.io/wets/p/creatina-monohidratada-optimum-nutrition-300g/): 300 g · 60 porciones. $129.900 COP (antes $149.900). Creatina monohidratada pura, micronizada para que se disuelva fácil. Sin sabor, sin azúcar y sin rellenos.
+- [Gold Standard 100% Whey Chocolate · Optimum Nutrition](https://mrkardona.github.io/wets/p/gold-standard-whey-optimum-nutrition-2lb/): 2 lb · 29 porciones. $189.900 COP. Proteína de suero con aislado como ingrediente principal. 24 g de proteína por porción, sabor Double Rich Chocolate.
+- [Magnesio Glicinato Alta Absorción · Doctor's Best](https://mrkardona.github.io/wets/p/magnesio-glicinato-doctors-best-240/): 240 tabletas. $109.900 COP. Magnesio quelado en forma de glicinato lisinato, la presentación más buscada por su buena tolerancia.
+- [Ashwagandha Extracto 450 mg · NOW Foods](https://mrkardona.github.io/wets/p/ashwagandha-now-foods-450mg-90/): 90 cápsulas. $89.900 COP. Extracto estandarizado de raíz de ashwagandha (Withania somnifera) en cápsula vegetal.
+- [Ultimate Omega sabor limón · Nordic Naturals](https://mrkardona.github.io/wets/p/omega-3-nordic-naturals-ultimate-omega-60/): 60 cápsulas blandas. $139.900 COP. Aceite de pescado concentrado en EPA y DHA, purificado y con sabor a limón para evitar el regusto.
+- [Vitamina D3 + K2 con aceite de coco · Sports Research](https://mrkardona.github.io/wets/p/vitamina-d3-k2-sports-research-60/): 60 cápsulas blandas. $99.900 COP. Vitamina D3 de origen vegetal con K2 (MK-7) en aceite de coco. Una cápsula pequeña al día.
+- [Vitamina C-1000 con escaramujo · NOW Foods](https://mrkardona.github.io/wets/p/vitamina-c-1000-now-foods-100/): 100 tabletas. $74.900 COP. 1000 mg de vitamina C por tableta, de liberación sostenida, con escaramujo.
+- [Multivitamínico Completo · Nature Made](https://mrkardona.github.io/wets/p/multivitaminico-nature-made-130/): 130 tabletas. $94.900 COP. 23 vitaminas y minerales esenciales en una tableta diaria. Verificado por USP.
+- [Collagen Peptides sin sabor · Vital Proteins](https://mrkardona.github.io/wets/p/colageno-vital-proteins-peptides-284g/): 284 g · 14 porciones. $159.900 COP (antes $174.900). Péptidos de colágeno bovino hidrolizado. Se disuelve en frío o en caliente y no cambia el sabor.
+
+## Skincare
+
+- [Hydrating Facial Cleanser · CeraVe](https://mrkardona.github.io/wets/p/limpiador-hidratante-cerave-473ml/): 473 ml. $89.900 COP. Limpiador en crema para piel normal a seca. Limpia sin espuma y sin dejar la piel tirante.
+- [Foaming Facial Cleanser · CeraVe](https://mrkardona.github.io/wets/p/limpiador-espumoso-cerave-473ml/): 473 ml. $89.900 COP. Limpiador en gel espumoso para piel normal a grasa. Retira el exceso de sebo sin resecar.
+- [Niacinamide 10% + Zinc 1% · The Ordinary](https://mrkardona.github.io/wets/p/niacinamida-the-ordinary-30ml/): 30 ml. $64.900 COP. Sérum de niacinamida al 10% con zinc. Textura ligera a base de agua, el clásico para piel con brillo.
+- [Hyaluronic Acid 2% + B5 · The Ordinary](https://mrkardona.github.io/wets/p/acido-hialuronico-the-ordinary-30ml/): 30 ml. $69.900 COP. Sérum hidratante con ácido hialurónico de varios pesos moleculares y vitamina B5.
+- [Vitamin C Facial Serum · TruSkin](https://mrkardona.github.io/wets/p/serum-vitamina-c-truskin-30ml/): 30 ml. $119.900 COP. Sérum de vitamina C con ácido hialurónico y vitamina E para el paso de la mañana.
+- [Retinol 0.5% in Squalane · The Ordinary](https://mrkardona.github.io/wets/p/retinol-the-ordinary-05-escualano-30ml/): 30 ml. $74.900 COP. Retinol al 0,5% en base de escualano. Concentración intermedia para quien ya conoce el ingrediente.
+- [Skin Perfecting 2% BHA Liquid Exfoliant · Paula's Choice](https://mrkardona.github.io/wets/p/exfoliante-bha-paulas-choice-118ml/): 118 ml. $169.900 COP (antes $184.900). Exfoliante líquido con ácido salicílico al 2%. Se deja en la piel, no se enjuaga.
+- [Moisturizing Cream · CeraVe](https://mrkardona.github.io/wets/p/crema-hidratante-cerave-453g/): 453 g. $119.900 COP. Crema hidratante rica para rostro y cuerpo. Textura densa que no se siente grasosa.
+- [Anthelios Melt-in Milk SPF 60 · La Roche-Posay](https://mrkardona.github.io/wets/p/protector-solar-la-roche-posay-anthelios-spf60/): 150 ml. $149.900 COP. Protector solar de amplio espectro SPF 60 para rostro y cuerpo. Se absorbe rápido y no deja blanco.
+
+## Datos
+
+- [Catálogo completo en JSON](https://mrkardona.github.io/wets/catalogo.json): precios, presentaciones, vencimientos y enlaces
+- [Términos, envíos, devoluciones y datos personales](https://mrkardona.github.io/wets/legal/)
+- [Preguntas frecuentes](https://mrkardona.github.io/wets/#preguntas)
+
+Los suplementos dietarios no son medicamentos y no reemplazan una alimentación balanceada.
