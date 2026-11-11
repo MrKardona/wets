@@ -368,41 +368,25 @@
   // ───────────── recomendador (portada) ─────────────
   const quiz = $('.js-quiz');
   if (quiz) {
+    // Las opciones salen de los objetivos del catálogo (datos/productos.mjs).
+    const GRUPOS = { Cuerpo: [], Piel: [] };
+    Object.keys(W.objg || {}).forEach((id) => { if (GRUPOS[W.objg[id]]) GRUPOS[W.objg[id]].push([W.obj[id], id]); });
     const PREGUNTAS = {
-      inicio: { t: '¿Qué quieres mejorar primero?', ops: [['Mi piel', 'pielTipo'], ['Mi energía y rendimiento', 'supMeta']] },
-      pielTipo: { t: '¿Cómo se siente tu piel al mediodía?', clave: 'tipo', sig: 'pielMeta', ops: [['Tirante o reseca', 'seca'], ['Brilla en frente y nariz', 'mixta'], ['Brilla en toda la cara', 'grasa'], ['Se irrita con facilidad', 'sensible']] },
-      pielMeta: { t: '¿Qué te gustaría ver distinto?', clave: 'meta', sig: 'fin', ops: [['Más hidratación', 'hidratacion'], ['Menos brillo y poros visibles', 'grasa'], ['Un tono más parejo', 'manchas'], ['Líneas de expresión', 'antiedad']] },
-      supMeta: { t: '¿Cuál es tu objetivo principal?', clave: 'meta', sig: 'supEntreno', ops: [['Ganar músculo y fuerza', 'musculo'], ['Más energía en el día', 'energia'], ['Descansar mejor', 'descanso'], ['Cubrir las vitaminas básicas', 'vitaminas']] },
-      supEntreno: { t: '¿Entrenas con pesas o alta intensidad?', clave: 'entreno', sig: 'fin', ops: [['Sí, 3 o más veces por semana', 'si'], ['A veces', 'aveces'], ['No por ahora', 'no']] },
+      inicio: { t: '¿Qué quieres cuidar primero?', ops: [['Mi piel', 'piel'], ['Mi cuerpo y mi energía', 'cuerpo']] },
+      piel: { t: '¿Qué buscas para tu piel?', clave: 'meta', sig: 'fin', ops: GRUPOS.Piel },
+      cuerpo: { t: '¿Cuál es tu objetivo principal?', clave: 'meta', sig: 'fin', ops: GRUPOS.Cuerpo },
     };
-    // Cada recomendación: [id del producto, por qué]. Los ids deben existir en datos/productos.mjs.
-    const ID = {
-      limpiaH: 'limpiador-hidratante-cerave-473ml', limpiaE: 'limpiador-espumoso-cerave-473ml', ha: 'acido-hialuronico-the-ordinary-30ml',
-      nia: 'niacinamida-the-ordinary-30ml', vitc: 'serum-vitamina-c-truskin-30ml', ret: 'retinol-the-ordinary-05-escualano-30ml',
-      crema: 'crema-hidratante-cerave-453g', spf: 'protector-solar-la-roche-posay-anthelios-spf60',
-      crea: 'creatina-monohidratada-optimum-nutrition-300g', whey: 'gold-standard-whey-optimum-nutrition-2lb', multi: 'multivitaminico-nature-made-130',
-      omega: 'omega-3-nordic-naturals-ultimate-omega-60', d3: 'vitamina-d3-k2-sports-research-60', c: 'vitamina-c-1000-now-foods-100',
-      mag: 'magnesio-glicinato-doctors-best-240', ash: 'ashwagandha-now-foods-450mg-90',
-    };
+    // Recomienda hasta 3 productos con ese objetivo; primero los que lo tienen como objetivo principal.
     function recomendar(r) {
-      if (r.tipo) {
-        const grasa = r.tipo === 'grasa' || r.tipo === 'mixta';
-        const trata = { hidratacion: [ID.ha, 'Sérum hidratante, va antes de la crema'], grasa: [ID.nia, 'El sérum clásico para piel con brillo'], manchas: [ID.vitc, 'Vitamina C para el paso de la mañana'], antiedad: [ID.ret, 'Retinol: de noche, empezando 2 veces por semana'] }[r.meta];
-        const cierre = r.meta === 'manchas' || r.meta === 'antiedad' ? [ID.spf, 'Protector solar cada mañana: sin él, lo demás no rinde'] : [ID.crema, 'Hidratante sin fragancia para sellar la rutina'];
-        return [[grasa ? ID.limpiaE : ID.limpiaH, grasa ? 'Limpiador en gel para piel mixta o grasa' : 'Limpiador en crema que no reseca'], trata, cierre];
-      }
-      return {
-        musculo: [[ID.crea, '5 g al día, todos los días'], [ID.whey, '24 g de proteína por porción'], [ID.multi, 'Una tableta diaria para cubrir lo básico']],
-        energia: [[ID.multi, '23 vitaminas y minerales en una tableta'], [ID.omega, 'Omega-3 concentrado en EPA y DHA'], r.entreno === 'si' ? [ID.crea, 'Si entrenas fuerte, 5 g al día'] : [ID.d3, 'Una cápsula pequeña con el almuerzo']],
-        descanso: [[ID.mag, 'Magnesio glicinato, en la noche'], [ID.ash, 'Extracto estandarizado de raíz']],
-        vitaminas: [[ID.multi, 'La base: una tableta diaria'], [ID.c, '1000 mg de vitamina C por tableta'], [ID.d3, 'D3 con K2 en una sola cápsula']],
-      }[r.meta];
+      const ids = Object.keys(P).filter((id) => P[id].o.indexOf(r.meta) >= 0);
+      ids.sort((x, y) => P[x].o.indexOf(r.meta) - P[y].o.indexOf(r.meta));
+      return ids.slice(0, 3).map((id) => [id, P[id].t]);
     }
 
     let resp = {}, paso = 1;
     function preguntar(clave) {
       const q = PREGUNTAS[clave];
-      quiz.innerHTML = '<p class="quiz__paso">Pregunta ' + paso + ' de 3</p><h3>' + q.t + '</h3><div class="quiz__ops">'
+      quiz.innerHTML = '<p class="quiz__paso">Pregunta ' + paso + ' de 2</p><h3>' + q.t + '</h3><div class="quiz__ops">'
         + q.ops.map((o, i) => '<button type="button" data-i="' + i + '">' + o[0] + '</button>').join('') + '</div>';
       quiz.onclick = (e) => {
         const b = e.target.closest('button[data-i]');
@@ -418,10 +402,10 @@
       const picks = (recomendar(resp) || []).filter((x) => x && P[x[0]]);
       if (!picks.length) return reiniciar();
       const c = calcular(picks.map((x) => ({ id: x[0], q: 1 })));
-      quiz.innerHTML = '<p class="quiz__paso">Tu rutina recomendada</p><h3>' + picks.length + ' productos, en este orden</h3><div class="quiz__res">'
+      quiz.innerHTML = '<p class="quiz__paso">Te recomendamos</p><h3>' + picks.length + (picks.length === 1 ? ' producto' : ' productos') + ' para ' + escapar(W.obj[resp.meta]).toLowerCase() + '</h3><div class="quiz__res">'
         + picks.map((x, i) => '<div class="quiz__item"><img src="' + foto(x[0]) + '" alt="" width="56" height="56"><div><a href="' + url(x[0]) + '">' + (i + 1) + '. ' + escapar(P[x[0]].n) + '</a><small>' + escapar(x[1]) + '</small></div><b>' + plata(P[x[0]].pr) + '</b></div>').join('')
         + '</div><p class="quiz__total"><span>Rutina completa' + (c.d ? ' con ' + Math.round(c.d * 100) + '% de descuento' : '') + '</span><span class="precio"><b>' + plata(c.total) + '</b>' + (c.d ? ' <s>' + plata(c.subtotal) + '</s>' : '') + '</span></p>'
-        + '<button type="button" class="cod js-rutina" style="width:100%" data-ids="' + picks.map((x) => x[0]).join(',') + '">Agregar mi rutina</button>'
+        + '<button type="button" class="cod js-rutina" style="width:100%" data-ids="' + picks.map((x) => x[0]).join(',') + '">Agregar los ' + picks.length + '</button>'
         + '<button type="button" class="quiz__otra" data-otra>Empezar de nuevo</button>';
       quiz.onclick = (e) => { if (e.target.closest('[data-otra]')) reiniciar(); };
     }
@@ -429,7 +413,15 @@
     reiniciar();
   }
 
-  // ───────────── aparición al hacer scroll ─────────────
+  // ───────────── efectos: aparición, cartas, scroll y galería ─────────────
+  const QUIETO = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FINO = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Títulos partidos en palabras para que entren una por una.
+  $$('.sec__cab h2').forEach((h) => {
+    h.innerHTML = h.textContent.split(' ').map((p, i) => '<span class="pal" style="--n:' + i + '">' + escapar(p) + '</span>').join(' ');
+  });
+
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entradas) => {
       entradas.forEach((en) => {
@@ -438,16 +430,91 @@
         el.classList.add('vis');
         io.unobserve(el);
         // Al terminar se limpia para no retrasar el hover de las tarjetas.
-        setTimeout(() => { el.classList.remove('rev', 'vis'); el.style.transitionDelay = ''; }, 1300);
+        setTimeout(() => { el.classList.remove('rev', 'vis'); el.style.transitionDelay = ''; }, 1500);
       });
     }, { rootMargin: '0px 0px -8% 0px' });
-    $$('.sec__cab, .card, .obj, .rut, .orig__lista li, .pasos li, .quiz').forEach((el) => {
+    $$('.sec__cab, .card, .obj, .rut, .cat, .bx, .pasos li, .quiz').forEach((el) => {
       const hermanos = Array.from(el.parentNode.children);
-      el.style.transitionDelay = Math.min(hermanos.indexOf(el), 7) * 55 + 'ms';
+      el.style.transitionDelay = Math.min(hermanos.indexOf(el) % 4, 7) * 70 + 'ms';
       el.classList.add('rev');
       io.observe(el);
     });
   }
+
+  // Cartas: se inclinan hacia el cursor y muestran la segunda foto.
+  if (FINO && !QUIETO) {
+    $$('.card').forEach((card) => {
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        card.classList.add('mueve');
+        card.style.setProperty('--ry', ((x - .5) * 9).toFixed(2) + 'deg');
+        card.style.setProperty('--rx', ((.5 - y) * 9).toFixed(2) + 'deg');
+        card.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+      });
+      card.addEventListener('pointerleave', () => {
+        card.classList.remove('mueve');
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+  if (FINO) {
+    document.addEventListener('pointerover', (e) => {
+      const f2 = e.target.closest && e.target.closest('.card') && $('.card__f2[data-src]', e.target.closest('.card'));
+      if (!f2) return;
+      f2.onload = () => f2.classList.add('lista');
+      f2.src = f2.dataset.src;
+      f2.removeAttribute('data-src');
+    });
+  }
+
+  // Carril de destacados: en escritorio queda fijo y el scroll lo mueve de lado.
+  const rail = $('.js-rail');
+  const medirRail = () => {
+    if (!rail) return;
+    const fijar = !QUIETO && window.matchMedia('(min-width: 860px)').matches;
+    rail.classList.toggle('pin', fijar);
+    rail.style.setProperty('--largo', fijar ? Math.max(0, $('.rail__pista', rail).scrollWidth - window.innerWidth) + 'px' : '0px');
+  };
+
+  // Un solo lector de scroll: progreso de la página, del hero y de cada bloque con data-sp.
+  const conSp = $$('[data-sp]'), hero = $('.hero'), barraProg = $('.prog');
+  let pedido = false;
+  function alBajar() {
+    pedido = false;
+    const vh = window.innerHeight, total = document.documentElement.scrollHeight - vh;
+    if (barraProg) barraProg.style.setProperty('--prog', total > 0 ? Math.min(1, window.scrollY / total).toFixed(4) : 0);
+    if (QUIETO) return;
+    if (hero) {
+      const r = hero.getBoundingClientRect();
+      if (r.bottom > 0) hero.style.setProperty('--s', Math.min(1, Math.max(0, -r.top / (r.height * .7))).toFixed(3));
+    }
+    conSp.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -80 || r.top > vh + 80) return;
+      const p = el.dataset.sp === 'fijo'
+        ? -r.top / Math.max(1, r.height - vh)          // recorrido dentro de un bloque fijo
+        : (vh - r.top) / (vh + r.height);              // paso por la pantalla
+      el.style.setProperty('--p', Math.min(1, Math.max(0, p)).toFixed(4));
+    });
+  }
+  const pedir = () => { if (!pedido) { pedido = true; requestAnimationFrame(alBajar); } };
+  window.addEventListener('scroll', pedir, { passive: true });
+  window.addEventListener('resize', () => { medirRail(); pedir(); });
+  window.addEventListener('load', () => { medirRail(); pedir(); });
+  medirRail(); alBajar();
+
+  // Galería del producto: miniaturas que llevan a cada foto.
+  $$('.js-gal').forEach((gal) => {
+    const pista = $('.gal__pista', gal), minis = $$('.gal__minis button', gal);
+    if (!pista || !minis.length) return;
+    const marcar = (i) => minis.forEach((m, n) => m.setAttribute('aria-current', n === i ? 'true' : 'false'));
+    minis.forEach((m, i) => m.addEventListener('click', () => { pista.scrollTo({ left: pista.clientWidth * i, behavior: QUIETO ? 'auto' : 'smooth' }); marcar(i); }));
+    let t;
+    pista.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(() => marcar(Math.round(pista.scrollLeft / pista.clientWidth)), 60); }, { passive: true });
+  });
 
   leer();
   pintarCuenta(false);

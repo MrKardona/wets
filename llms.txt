@@ -2,7 +2,7 @@
 
 > Wets es una tienda en línea colombiana de suplementos dietarios y productos para el cuidado de la piel (skincare) 100% originales, importados de Estados Unidos. Vende a toda Colombia con envío gratis y pago contraentrega (el cliente paga en efectivo al recibir).
 
-Nota: catálogo de muestra. Los precios y fechas son de ejemplo hasta que la tienda publique su inventario real.
+Nota: los precios publicados son de referencia y están por confirmar.
 
 ## Cómo se compra
 
@@ -16,27 +16,35 @@ Nota: catálogo de muestra. Los precios y fechas son de ejemplo hasta que la tie
 
 ## Suplementos
 
-- [Creatina Monohidratada Micronizada · Optimum Nutrition](https://mrkardona.github.io/wets/p/creatina-monohidratada-optimum-nutrition-300g/): 300 g · 60 porciones. $129.900 COP (antes $149.900). Creatina monohidratada pura, micronizada para que se disuelva fácil. Sin sabor, sin azúcar y sin rellenos.
-- [Gold Standard 100% Whey Chocolate · Optimum Nutrition](https://mrkardona.github.io/wets/p/gold-standard-whey-optimum-nutrition-2lb/): 2 lb · 29 porciones. $189.900 COP. Proteína de suero con aislado como ingrediente principal. 24 g de proteína por porción, sabor Double Rich Chocolate.
-- [Magnesio Glicinato Alta Absorción · Doctor's Best](https://mrkardona.github.io/wets/p/magnesio-glicinato-doctors-best-240/): 240 tabletas. $109.900 COP. Magnesio quelado en forma de glicinato lisinato, la presentación más buscada por su buena tolerancia.
-- [Ashwagandha Extracto 450 mg · NOW Foods](https://mrkardona.github.io/wets/p/ashwagandha-now-foods-450mg-90/): 90 cápsulas. $89.900 COP. Extracto estandarizado de raíz de ashwagandha (Withania somnifera) en cápsula vegetal.
-- [Ultimate Omega sabor limón · Nordic Naturals](https://mrkardona.github.io/wets/p/omega-3-nordic-naturals-ultimate-omega-60/): 60 cápsulas blandas. $139.900 COP. Aceite de pescado concentrado en EPA y DHA, purificado y con sabor a limón para evitar el regusto.
-- [Vitamina D3 + K2 con aceite de coco · Sports Research](https://mrkardona.github.io/wets/p/vitamina-d3-k2-sports-research-60/): 60 cápsulas blandas. $99.900 COP. Vitamina D3 de origen vegetal con K2 (MK-7) en aceite de coco. Una cápsula pequeña al día.
-- [Vitamina C-1000 con escaramujo · NOW Foods](https://mrkardona.github.io/wets/p/vitamina-c-1000-now-foods-100/): 100 tabletas. $74.900 COP. 1000 mg de vitamina C por tableta, de liberación sostenida, con escaramujo.
-- [Multivitamínico Completo · Nature Made](https://mrkardona.github.io/wets/p/multivitaminico-nature-made-130/): 130 tabletas. $94.900 COP. 23 vitaminas y minerales esenciales en una tableta diaria. Verificado por USP.
-- [Collagen Peptides sin sabor · Vital Proteins](https://mrkardona.github.io/wets/p/colageno-vital-proteins-peptides-284g/): 284 g · 14 porciones. $159.900 COP (antes $174.900). Péptidos de colágeno bovino hidrolizado. Se disuelve en frío o en caliente y no cambia el sabor.
+- [Hair, Skin & Nails Advanced Gomitas · Nature's Bounty](https://mrkardona.github.io/wets/p/gomitas-cabello-piel-unas-natures-bounty-advanced-80/): 80 gomitas · 40 porciones. $79.900 COP. Gomitas sabor fresa con 6.000 mcg de biotina por porción, más vitaminas A, C y E. La versión Advanced de la marca.
+- [Multivitamínico para Mujer · Vimerson Health](https://mrkardona.github.io/wets/p/multivitaminico-mujer-vimerson-health-60/): 60 cápsulas vegetarianas · 30 porciones. $109.900 COP. Multivitamínico para mujer con 20 vitaminas y minerales en formas metiladas (folato 5-MTHF y B12 metilcobalamina), sin hierro.
+- [HerPrime Órganos de Res para Mujer + Colágeno · NeoCell](https://mrkardona.github.io/wets/p/herprime-organos-de-res-mujer-neocell-120/): 120 cápsulas · 60 porciones. $109.900 COP. 1.300 mg de órganos de res de pastoreo por porción, con los Collagen Bio-Peptides de NeoCell.
+- [Liver Care Fórmula para el Hígado · Carlyle](https://mrkardona.github.io/wets/p/liver-care-carlyle-liver-strong-90/): 90 cápsulas · 45 porciones. $69.900 COP. Fórmula Liver Strong de Carlyle con cardo mariano, NAC, alcachofa, diente de león y bardana.
+- [Probiótico para Mujer 50 mil millones UFC · Doctor's Recipes](https://mrkardona.github.io/wets/p/probiotico-mujer-doctors-recipes-50-billones/): 60 cápsulas · 30 porciones. $119.900 COP. 16 cepas probióticas con 50 mil millones de UFC, fibra prebiótica y arándano rojo orgánico, en cápsula de liberación retardada.
+- [Berberina Glucose Support · NOW Foods](https://mrkardona.github.io/wets/p/berberina-glucose-support-now-foods-90/): 90 cápsulas blandas · 90 porciones. $149.900 COP. 400 mg de berberina HCl por cápsula blanda, combinada con aceite MCT.
+- [Complejo B Metilado · Nutricost](https://mrkardona.github.io/wets/p/complejo-b-metilado-nutricost-120/): 120 cápsulas · 60 porciones. $89.900 COP. Vitaminas del complejo B en formas activas (folato 5-MTHF, B12 metilcobalamina, B6 P5P) con minerales.
+- [Colostrum Gomitas · Lemme](https://mrkardona.github.io/wets/p/colostrum-gomitas-lemme-60/): 60 gomitas · 30 porciones. $139.900 COP. Gomitas de calostro bovino aislado (Maolac) con prebióticos y vitamina D3, de la marca de Kourtney Kardashian.
+- [Burn Gomitas Composición Corporal · Lemme](https://mrkardona.github.io/wets/p/burn-gomitas-lemme-60/): 60 gomitas · 30 porciones. $179.900 COP. Gomitas sabor frutos rojos con 400 mg de Morosil (naranja roja), jengibre negro, cromo, B6 y B12.
+- [Lion's Mane (Melena de León) Cápsulas · Host Defense](https://mrkardona.github.io/wets/p/melena-de-leon-host-defense-120/): 120 cápsulas · 60 porciones. $249.900 COP. Hongo melena de león orgánico de Host Defense, la marca del micólogo Paul Stamets, en cápsulas vegetarianas.
+- [Ultimate Omega 2X Omega-3 · Nordic Naturals](https://mrkardona.github.io/wets/p/ultimate-omega-2x-nordic-naturals-120/): Cápsulas blandas sabor limón · 2.150 mg por porción. $289.900 COP. Aceite de pescado de alta concentración: 2.150 mg de omega-3 por porción, en forma de triglicérido y sabor limón.
+- [NAD+ Resveratrol Berberina Quercetina Fisetina · StrongVit](https://mrkardona.github.io/wets/p/nad-resveratrol-berberina-strongvit/): Cápsulas. $119.900 COP. Fórmula multi-ingrediente con NAD+, resveratrol, berberina, quercetina y fisetina, más CoQ10, ALA, NAC y té verde.
+- [Centrum Silver Hombre 50+ · Centrum](https://mrkardona.github.io/wets/p/centrum-silver-hombre-50-200/): 200 tabletas. $119.900 COP. El multivitamínico de Centrum para hombres mayores de 50 años, en el frasco grande de 200 tabletas.
+- [Centrum Silver Mujer 50+ · Centrum](https://mrkardona.github.io/wets/p/centrum-silver-mujer-50-200/): 200 tabletas. $119.900 COP. El multivitamínico de Centrum para mujeres mayores de 50 años, en el frasco grande de 200 tabletas.
+- [Magnesio Glicinato 200 mg · Webber Naturals](https://mrkardona.github.io/wets/p/magnesio-glicinato-webber-naturals-120/): 120 cápsulas vegetarianas · 120 porciones. $99.900 COP. 200 mg de magnesio por cápsula en forma de glicinato de alta absorción, una cápsula al día.
+- [Pimienta de Cayena 22 en 1 · NEWVITA](https://mrkardona.github.io/wets/p/pimienta-cayena-22-en-1-newvita-240/): 240 cápsulas blandas. $99.900 COP. Fórmula botánica 22 en 1 con pimienta de cayena (equivalente a 3.000 mg por porción), canela de Ceilán, cúrcuma, berberina y ajo.
 
 ## Skincare
 
-- [Hydrating Facial Cleanser · CeraVe](https://mrkardona.github.io/wets/p/limpiador-hidratante-cerave-473ml/): 473 ml. $89.900 COP. Limpiador en crema para piel normal a seca. Limpia sin espuma y sin dejar la piel tirante.
-- [Foaming Facial Cleanser · CeraVe](https://mrkardona.github.io/wets/p/limpiador-espumoso-cerave-473ml/): 473 ml. $89.900 COP. Limpiador en gel espumoso para piel normal a grasa. Retira el exceso de sebo sin resecar.
-- [Niacinamide 10% + Zinc 1% · The Ordinary](https://mrkardona.github.io/wets/p/niacinamida-the-ordinary-30ml/): 30 ml. $64.900 COP. Sérum de niacinamida al 10% con zinc. Textura ligera a base de agua, el clásico para piel con brillo.
-- [Hyaluronic Acid 2% + B5 · The Ordinary](https://mrkardona.github.io/wets/p/acido-hialuronico-the-ordinary-30ml/): 30 ml. $69.900 COP. Sérum hidratante con ácido hialurónico de varios pesos moleculares y vitamina B5.
-- [Vitamin C Facial Serum · TruSkin](https://mrkardona.github.io/wets/p/serum-vitamina-c-truskin-30ml/): 30 ml. $119.900 COP. Sérum de vitamina C con ácido hialurónico y vitamina E para el paso de la mañana.
-- [Retinol 0.5% in Squalane · The Ordinary](https://mrkardona.github.io/wets/p/retinol-the-ordinary-05-escualano-30ml/): 30 ml. $74.900 COP. Retinol al 0,5% en base de escualano. Concentración intermedia para quien ya conoce el ingrediente.
-- [Skin Perfecting 2% BHA Liquid Exfoliant · Paula's Choice](https://mrkardona.github.io/wets/p/exfoliante-bha-paulas-choice-118ml/): 118 ml. $169.900 COP (antes $184.900). Exfoliante líquido con ácido salicílico al 2%. Se deja en la piel, no se enjuaga.
-- [Moisturizing Cream · CeraVe](https://mrkardona.github.io/wets/p/crema-hidratante-cerave-453g/): 453 g. $119.900 COP. Crema hidratante rica para rostro y cuerpo. Textura densa que no se siente grasosa.
-- [Anthelios Melt-in Milk SPF 60 · La Roche-Posay](https://mrkardona.github.io/wets/p/protector-solar-la-roche-posay-anthelios-spf60/): 150 ml. $149.900 COP. Protector solar de amplio espectro SPF 60 para rostro y cuerpo. Se absorbe rápido y no deja blanco.
+- [PDRN Hyaluronic Acid Capsule 100 Sérum · Anua](https://mrkardona.github.io/wets/p/serum-pdrn-anua-capsule-100-30ml/): 30 ml. $139.900 COP. Sérum coreano con PDRN, ácido hialurónico y colágeno en microcápsulas, para una piel hidratada y luminosa.
+- [Silk Peptide EGF Tónico Alisante · Sungboon Editor](https://mrkardona.github.io/wets/p/tonico-silk-peptide-egf-sungboon-editor-300ml/): 300 ml. $139.900 COP. Tónico-esencia coreano con agua de seda, 30 péptidos, EGF y cápsulas de ceramida, en botella grande de 300 ml.
+- [345 Relief Cream Dúo · Dr. Althea](https://mrkardona.github.io/wets/p/crema-345-relief-dr-althea-duo/): 2 tubos de 50 ml. $189.900 COP. Crema-gel coreana calmante en presentación doble, para piel con marcas, tono desigual o sensibilidad.
+- [PDRN Pink Peptide Sérum · Medicube](https://mrkardona.github.io/wets/p/serum-pdrn-pink-peptide-medicube-30ml/): 30 ml. $119.900 COP. Sérum rosado de Medicube con PDRN, cinco péptidos y niacinamida; el color viene de la vitamina B12.
+- [Collagen Jelly Cream · Medicube](https://mrkardona.github.io/wets/p/crema-collagen-jelly-medicube-110ml/): 110 ml. $129.900 COP. La crema en gelatina rosada de Medicube, con colágeno y niacinamida, para un acabado luminoso tipo 'glass glow'.
+- [PDRN Deep Collagen Silk Peptide Ampolla · AQUAE](https://mrkardona.github.io/wets/p/ampolla-pdrn-deep-collagen-aquae-40ml/): 40 ml con aplicador. $79.900 COP. Ampolla de fórmula coreana con PDRN, colágeno, péptidos de seda y complejo de ácido hialurónico, con aplicador tipo jeringa.
+- [Deep Collagen Peptide Ampolla Intensiva · BARUBT](https://mrkardona.github.io/wets/p/ampolla-deep-collagen-barubt-40ml/): 40 ml con aplicador. $89.900 COP. Ampolla con colágeno soluble y péptidos (palmitoyl pentapeptide, acetyl hexapeptide), sin alcohol, con aplicador tipo jeringa.
+- [Gel Conductor Hidratante · INIA](https://mrkardona.github.io/wets/p/gel-conductor-inia/): Tubo. $89.900 COP. Gel conductor con aloe vera y ácido hialurónico para dispositivos faciales de microcorriente, sin fragancia.
+- [Fresh That Lasts Desodorante Vainilla y Pistacho · Zyvarn](https://mrkardona.github.io/wets/p/desodorante-zyvarn-vainilla-pistacho-50g/): 50 g. $59.900 COP. Desodorante en barra de acabado invisible, con aroma cálido de vainilla y pistacho.
+- [Henna para Cejas · Piluss Clon](https://mrkardona.github.io/wets/p/henna-cejas-piluss-clon/): Kit: henna 3 g + activador 10 ml. $34.900 COP. Kit de henna vegana para cejas con activador, recipiente y pincel, para rellenar y definir en casa.
 
 ## Datos
 

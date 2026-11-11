@@ -7,19 +7,19 @@
  * catalogo.json). Todo el contenido queda en el HTML, sin depender de JavaScript,
  * para que cualquier rastreador lo lea.
  */
-import { mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import C from "./datos/config.mjs";
-import { OBJETIVOS, PRODUCTOS, RUTINAS } from "./datos/productos.mjs";
+import { OBJETIVOS, PRODUCTOS, RUTINAS, PORTADA, DESTACADOS } from "./datos/productos.mjs";
 
 const RAIZ = dirname(fileURLToPath(import.meta.url));
 const HOY = new Date().toISOString().slice(0, 10);
 const VALIDO_HASTA = new Date(Date.now() + 90 * 864e5).toISOString().slice(0, 10);
 const ENVIO_TXT = `${C.envio.diasMin} a ${C.envio.diasMax} días hábiles`;
 const CATS = {
-  suplementos: { nombre: "Suplementos", titulo: "Suplementos originales importados de USA" },
-  skincare: { nombre: "Skincare", titulo: "Skincare original importado de USA" },
+  suplementos: { nombre: "Suplementos", titulo: "Suplementos originales traídos de USA", ceja: "Cuerpo" },
+  skincare: { nombre: "Skincare", titulo: "Skincare coreano y cuidado personal", ceja: "Piel" },
 };
 
 // ───────────── utilidades ─────────────
@@ -30,7 +30,18 @@ const porId = Object.fromEntries(PRODUCTOS.map((p) => [p.id, p]));
 const descuentoPara = (n) => (C.escalas.find((e) => n >= e.desde) || { descuento: 0 }).descuento;
 const maxDescuento = Math.round(Math.max(...C.escalas.map((e) => e.descuento)) * 100);
 const off = (p) => (p.antes > p.precio ? Math.round((1 - p.precio / p.antes) * 100) : 0);
-const img = (p) => p.foto || `assets/p/${p.id}.svg`;
+// Fotos por convención: assets/fotos/<id>-1.webp, -2, -3… (900 px) y su versión chica <id>-1s.webp (440 px).
+const FOTOS = Object.fromEntries(PRODUCTOS.map((p) => {
+  const l = [];
+  for (let n = 1; n <= 8 && existsSync(join(RAIZ, `assets/fotos/${p.id}-${n}.webp`)); n++) l.push(n);
+  return [p.id, l];
+}));
+const conFotos = (p) => FOTOS[p.id].length > 0;
+const img = (p, n = 1, chica = false) => (conFotos(p) ? `assets/fotos/${p.id}-${Math.min(n, FOTOS[p.id].length)}${chica ? "s" : ""}.webp` : `assets/p/${p.id}.svg`);
+const srcset = (p, n, raiz, sizes) => (conFotos(p) ? ` srcset="${raiz}${img(p, n, true)} 440w, ${raiz}${img(p, n)} 900w" sizes="${sizes}"` : "");
+const numero = (p) => String(PRODUCTOS.indexOf(p) + 1).padStart(2, "0");
+const compradoEn = (p) => p.origen || "Estados Unidos";
+const traido = (p) => (p.origen ? `Marca de ${p.pais || p.origen}` : "Traído de USA");
 const urlP = (p) => `${C.url}/p/${p.id}/`;
 const ld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, "\\u003c")}</script>`;
 const waLink = (texto) => `https://wa.me/${C.whatsapp}?text=${encodeURIComponent(texto)}`;
@@ -46,9 +57,12 @@ for (const p of PRODUCTOS) {
   for (const o of p.objetivos) if (!OBJETIVOS.some((x) => x.id === o)) throw new Error(`${p.id}: objetivo desconocido: ${o}`);
 }
 for (const r of RUTINAS) for (const id of r.items) if (!porId[id]) throw new Error(`${r.id}: producto inexistente: ${id}`);
+for (const id of [...PORTADA, ...DESTACADOS]) if (!porId[id]) throw new Error(`PORTADA/DESTACADOS: producto inexistente: ${id}`);
+const sinFotos = PRODUCTOS.filter((p) => FOTOS[p.id].length < 3).map((p) => `${p.id} (${FOTOS[p.id].length})`);
 
 // ───────────── dibujo del envase (mientras no haya foto real) ─────────────
-function dibujo(p) {
+function dibujo(p0) {
+  const p = { forma: "frasco", color: "#FBF8F1", fondo: "#E9E1D0", corto: p0.marca.toUpperCase().slice(0, 12), ...p0 };
   const c = p.color, t = "#14201B";
   const claro = /^#(F|E|D)/i.test(c);
   const tapa = claro ? "#2C3A44" : t;
@@ -80,7 +94,7 @@ const ICO = {
   gota: `<svg class="logo__gota" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0c3 4.4 6 7 6 10.2A6 6 0 0 1 0 10.2C0 7 3 4.400 6 0z"/></svg>`,
 };
 
-function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "", jsonld = [] }) {
+function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "", jsonld = [], imagen = "assets/img/caja.webp" }) {
   const canonica = C.url + ruta;
   const g = C.geo;
   return `<!doctype html>
@@ -108,7 +122,8 @@ function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "",
 <meta property="og:url" content="${canonica}">
 <meta property="og:locale" content="es_CO">
 <meta property="og:site_name" content="${esc(C.marca)}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="${C.url}/${imagen}">
+<meta name="twitter:card" content="summary_large_image">
 ${extra}<link rel="icon" type="image/svg+xml" href="${raiz}assets/favicon.svg">
 <link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/bricolage-grotesque.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/instrument-sans.woff2" crossorigin>
@@ -117,6 +132,7 @@ ${extra}<link rel="icon" type="image/svg+xml" href="${raiz}assets/favicon.svg">
 ${jsonld.map(ld).join("\n")}
 </head>
 <body>
+<i class="prog" aria-hidden="true"></i>
 <a class="salto" href="#contenido">Saltar al contenido</a>
 <p class="aviso">Envío gratis a toda Colombia <i>·</i> Pagas al recibir<span class="aviso__x"> <i>·</i> 100% originales de USA</span></p>
 <header class="cab">
@@ -125,6 +141,7 @@ ${jsonld.map(ld).join("\n")}
     <nav class="cab__nav" aria-label="Principal">
       <a href="${raiz}#suplementos">Suplementos</a>
       <a href="${raiz}#skincare">Skincare</a>
+      <a href="${raiz}#destacados">Destacados</a>
       <a href="${raiz}#rutinas">Rutinas</a>
       <a href="${raiz}#originalidad">Originalidad</a>
       <a href="${raiz}#preguntas">Preguntas</a>
@@ -159,7 +176,7 @@ function pie(raiz) {
     <p>© ${HOY.slice(0, 4)} ${esc(e.razonSocial || C.marca)}${e.nit ? ` · NIT ${esc(e.nit)}` : ""}${e.ciudad ? ` · ${esc(e.ciudad)}, Colombia` : " · Colombia"}</p>
   </div>
 </footer>
-${C.modoDemo ? `<p class="demo">Catálogo de muestra: precios y fechas de ejemplo</p>` : ""}
+${C.modoDemo ? `<p class="demo">Precios de referencia, por confirmar</p>` : ""}
 <script src="${raiz}assets/catalogo.js" defer></script>
 <script src="${raiz}assets/wets.js" defer></script>
 </body>
@@ -172,8 +189,10 @@ function tarjeta(p, raiz) {
   const nombre = `${p.nombre} ${p.marca}`;
   return `<article class="card" data-cat="${p.cat}" data-obj="${p.objetivos.join(" ")}">
   <a class="card__img" href="${raiz}p/${p.id}/" tabindex="-1">
-    <img src="${raiz}${img(p)}" alt="${esc(nombre)}, ${esc(p.tamano)}" width="240" height="240" loading="lazy" decoding="async">
+    <img src="${raiz}${img(p, 1, true)}"${srcset(p, 1, raiz, "(min-width:860px) 270px, (min-width:620px) 31vw, 46vw")} alt="${esc(nombre)}, ${esc(p.tamano)}" width="440" height="440" loading="lazy" decoding="async">${FOTOS[p.id].length > 1 ? `
+    <img class="card__f2" data-src="${raiz}${img(p, 2, true)}" alt="" width="440" height="440" decoding="async">` : ""}
     ${d ? `<span class="tag tag--off">${d}% OFF</span>` : p.etiqueta ? `<span class="tag">${esc(p.etiqueta)}</span>` : ""}
+    <span class="card__n">N.º ${numero(p)}</span>
   </a>
   <div class="card__txt">
     <p class="card__marca">${esc(p.marca)}</p>
@@ -187,7 +206,7 @@ function tarjeta(p, raiz) {
 }
 
 const FAQ = [
-  ["¿Los productos de Wets son originales?", `Sí. ${C.marca} compra cada producto en Estados Unidos a tiendas y distribuidores autorizados de la marca. Llega sellado de fábrica, con el lote y la fecha de vencimiento visibles, y en la página de cada producto ves esa fecha antes de comprar. Si recibes algo que no es original, te devolvemos el 100% del dinero.`],
+  ["¿Los productos de Wets son originales?", `Sí. ${C.marca} compra cada producto en Estados Unidos a tiendas y distribuidores autorizados de la marca. Llega sellado de fábrica, con el lote y la fecha de vencimiento impresos en el envase; si quieres saber la fecha antes de pedir, te la confirmamos por WhatsApp. Si recibes algo que no es original, te devolvemos el 100% del dinero.`],
   ["¿Puedo pagar contraentrega?", `Sí. Haces el pedido sin pagar nada y pagas en efectivo cuando la transportadora te lo entrega. El pago contraentrega está disponible según la cobertura de la transportadora en tu municipio; si tu dirección no tiene cobertura te escribimos por WhatsApp para darte otra opción.`],
   ["¿Cuánto cuesta el envío y cuánto tarda?", `El envío es gratis a toda Colombia. La entrega tarda de ${ENVIO_TXT} según la ciudad.`],
   ["¿Cómo hago un pedido?", `Elige el producto y toca "Pedir y pagar al recibir". Llenas tu nombre, celular y dirección en un formulario corto, confirmas, y te contactamos por WhatsApp para verificar el pedido antes de despacharlo. No necesitas crear cuenta ni tarjeta.`],
@@ -241,8 +260,9 @@ function portada() {
   const cuenta = {};
   for (const p of PRODUCTOS) cuenta[p.marca] = (cuenta[p.marca] || 0) + 1;
   const marcas = Object.keys(cuenta).sort((a, b) => cuenta[b] - cuenta[a]); // las más presentes primero
-  const heroIds = ["creatina-monohidratada-optimum-nutrition-300g", "niacinamida-the-ordinary-30ml", "crema-hidratante-cerave-453g"].map((id) => porId[id]).filter(Boolean);
-  const hero = heroIds.length === 3 ? heroIds : PRODUCTOS.slice(0, 3);
+  const mano = (PORTADA.length === 5 ? PORTADA.map((id) => porId[id]) : PRODUCTOS.slice(0, 5));
+  const destacados = (DESTACADOS.length ? DESTACADOS.map((id) => porId[id]) : PRODUCTOS.slice(0, 8));
+  const cuantos = (cat) => PRODUCTOS.filter((p) => p.cat === cat).length;
 
   const objetivos = OBJETIVOS.map((o, i) => {
     const cat = o.grupo === "Piel" ? "skincare" : "suplementos";
@@ -251,7 +271,7 @@ function portada() {
 
   const seccion = (cat) => `<section class="sec" id="${cat}">
   <div class="wrap">
-    <header class="sec__cab"><p class="ceja">${cat === "suplementos" ? "Cuerpo" : "Piel"}</p><h2>${CATS[cat].titulo}</h2></header>
+    <header class="sec__cab"><p class="ceja">${CATS[cat].ceja} · ${cuantos(cat)} productos</p><h2>${CATS[cat].titulo}</h2></header>
     <p class="filtro js-filtro" hidden></p>
     <div class="grid">
 ${PRODUCTOS.filter((p) => p.cat === cat).map((p) => tarjeta(p, raiz)).join("\n")}
@@ -265,7 +285,7 @@ ${PRODUCTOS.filter((p) => p.cat === cat).map((p) => tarjeta(p, raiz)).join("\n")
     const d = descuentoPara(items.length);
     const total = items.reduce((a, p) => a + Math.round(p.precio * (1 - d)), 0);
     return `<article class="rut">
-  <div class="rut__fotos">${items.map((p) => `<img src="${img(p)}" alt="" width="240" height="240" loading="lazy" decoding="async">`).join("")}</div>
+  <div class="rut__fotos">${items.map((p) => `<img src="${img(p, 1, true)}" alt="" width="440" height="440" loading="lazy" decoding="async">`).join("")}</div>
   <p class="ceja">${esc(r.para)}</p>
   <h3>${esc(r.nombre)}</h3>
   <p class="rut__nota">${esc(r.nota)}</p>
@@ -293,23 +313,36 @@ ${PRODUCTOS.filter((p) => p.cat === cat).map((p) => tarjeta(p, raiz)).join("\n")
   <div class="wrap hero__grid">
     <div class="hero__txt">
       <p class="ceja">Importado de Estados Unidos · Entrega en toda Colombia</p>
-      <h1>Suplementos y skincare <em>originales</em> de USA. Pagas al recibir.</h1>
-      <p class="hero__sub">Las marcas que ya conoces (${marcas.slice(0, 4).map(esc).join(", ")}), traídas de Estados Unidos y entregadas en tu casa en ${ENVIO_TXT}. Sin pagos por adelantado.</p>
+      <h1>Suplementos y skincare <em>originales</em>, traídos de USA. Pagas al recibir.</h1>
+      <p class="hero__sub">Marcas como ${["Centrum", "Medicube", "Nature's Bounty", "Anua"].join(", ")}, compradas en Estados Unidos y entregadas en tu casa en ${ENVIO_TXT}. Sin pagos por adelantado.</p>
       <div class="hero__cta">
         <a class="cod" href="#suplementos">${ICO.billete}Ver productos</a>
         <a class="btn btn--linea" href="#quiz">Armar mi rutina en 1 minuto</a>
       </div>
       <ul class="hero__puntos"><li>Envío gratis</li><li>Pago contraentrega</li><li>${C.devolucionDias} días para cambios</li></ul>
     </div>
-    <div class="hero__vis" aria-hidden="true">
-      ${hero.map((p, i) => `<img class="hero__pack hero__pack--${i + 1}" src="${img(p)}" alt="" width="240" height="240"${i === 0 ? ' fetchpriority="high"' : ""}>`).join("\n      ")}
-      <svg class="sello" viewBox="0 0 200 200"><defs><path id="aro" d="M100 100m-80 0a80 80 0 1 1 160 0a80 80 0 1 1-160 0"/></defs><circle cx="100" cy="100" r="97" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="100" cy="100" r="63" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 5"/><text font-size="12.5" font-weight="700" fill="currentColor"><textPath href="#aro" textLength="496" lengthAdjust="spacing">100% ORIGINAL · IMPORTADO DE USA · PAGAS AL RECIBIR ·</textPath></text><text x="100" y="104" text-anchor="middle" font-size="34" font-weight="800" fill="currentColor">USA</text><text x="100" y="124" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="2" fill="currentColor">COLOMBIA</text></svg>
-      <div class="guia"><span>Guía de envío</span><b>USA → tu casa</b><span>Contraentrega · Envío $0</span></div>
+    <div class="mano">
+      ${mano.map((p, i) => `<a class="mano__c" href="p/${p.id}/" style="--i:${i - 2};--z:${5 - Math.abs(i - 2)}"><img src="${img(p, 1, true)}" alt="${esc(p.nombre)} ${esc(p.marca)}" width="440" height="440"${i === 2 ? ' fetchpriority="high"' : ""}><span><small>${esc(p.marca)}</small>${esc(p.corto || p.nombre)}</span></a>`).join("\n      ")}
+      <svg class="sello" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="aro" d="M100 100m-80 0a80 80 0 1 1 160 0a80 80 0 1 1-160 0"/></defs><circle cx="100" cy="100" r="97" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="100" cy="100" r="63" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 5"/><text font-size="12.5" font-weight="700" fill="currentColor"><textPath href="#aro" textLength="496" lengthAdjust="spacing">100% ORIGINAL · TRAÍDO DE USA · PAGAS AL RECIBIR ·</textPath></text><text x="100" y="104" text-anchor="middle" font-size="34" font-weight="800" fill="currentColor">USA</text><text x="100" y="124" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="2" fill="currentColor">COLOMBIA</text></svg>
     </div>
   </div>
 </section>
 
-<div class="cinta" aria-hidden="true"><div class="cinta__pista">${Array(2).fill(["100% original", "Importado de USA", "Lote y vencimiento visibles", "Pago contraentrega", "Envío gratis", "Asesoría por WhatsApp"].map((t) => `<span>${t}</span>`).join("")).join("")}</div></div>
+<div class="cinta" aria-hidden="true"><div class="cinta__pista">${Array(2).fill(["100% original", "Traído de USA", "Sellado de fábrica", "Pago contraentrega", "Envío gratis", "Asesoría por WhatsApp"].map((t) => `<span>${t}</span>`).join("")).join("")}</div></div>
+
+<section class="wrap cats" aria-label="Categorías">
+  <a class="cat" href="#suplementos" data-sp><img src="assets/img/suplementos.webp" alt="" width="960" height="1200" loading="lazy" decoding="async"><div class="cat__txt"><p class="ceja">Cuerpo · ${cuantos("suplementos")} productos</p><h2>Suplementos</h2><span class="cat__ir">Ver suplementos</span></div></a>
+  <a class="cat" href="#skincare" data-sp><img src="assets/img/skincare.webp" alt="" width="960" height="1200" loading="lazy" decoding="async"><div class="cat__txt"><p class="ceja">Piel · ${cuantos("skincare")} productos</p><h2>Skincare</h2><span class="cat__ir">Ver skincare</span></div></a>
+</section>
+
+<section class="rail js-rail" id="destacados" data-sp="fijo">
+  <div class="rail__fijo">
+    <div class="wrap"><header class="sec__cab"><p class="ceja">Selección Wets</p><h2>${destacados.length} productos para empezar a conocernos</h2></header></div>
+    <div class="rail__pista">
+      ${destacados.map((p, i) => `<a class="rail__c" href="p/${p.id}/"><img src="${img(p, 2, true)}"${srcset(p, 2, "", "(min-width:860px) 360px, 76vw")} alt="${esc(p.nombre)} ${esc(p.marca)}" width="900" height="900" loading="lazy" decoding="async"><span class="rail__n">${String(i + 1).padStart(2, "0")} / ${String(destacados.length).padStart(2, "0")}</span><div class="rail__txt"><small>${esc(p.marca)}</small><b>${esc(p.corto || p.nombre)}</b><span>${plata(p.precio)}</span></div></a>`).join("\n      ")}
+    </div>
+  </div>
+</section>
 
 <section class="sec sec--obj" id="objetivos">
   <div class="wrap">
@@ -335,21 +368,24 @@ ${rutinas}
 
 <section class="sec sec--agua" id="quiz">
   <div class="wrap quiz__grid">
-    <header class="sec__cab"><p class="ceja">1 minuto · 3 preguntas</p><h2>¿No sabes por dónde empezar?</h2><p>Responde tres preguntas y te armamos una rutina de piel o de suplementos con lo que de verdad necesitas, sin relleno.</p></header>
+    <header class="sec__cab"><p class="ceja">1 minuto · 2 preguntas</p><h2>¿No sabes por dónde empezar?</h2><p>Responde dos preguntas y te mostramos los productos del catálogo que van con lo que buscas, sin relleno.</p></header>
     <div class="quiz js-quiz"><noscript><p>Para usar el recomendador activa JavaScript, o escríbenos por WhatsApp y te asesoramos.</p></noscript></div>
   </div>
 </section>
 
 <section class="sec" id="originalidad">
   <div class="wrap orig">
-    <header class="sec__cab"><p class="ceja">Originalidad</p><h2>Así sabes que lo que recibes es original</h2></header>
+    <div class="orig__izq">
+      <header class="sec__cab"><p class="ceja">Originalidad</p><h2>Así sabes que lo que recibes es original</h2></header>
+      <p class="orig__garantia"><b>Garantía de originalidad:</b> si un producto no es original, te devolvemos el 100% de tu dinero.</p>
+      <figure class="orig__foto" data-sp><img src="assets/img/caja.webp" alt="Caja de envío abierta con productos sellados" width="1100" height="739" loading="lazy" decoding="async"></figure>
+    </div>
     <ol class="orig__lista">
-      <li><b>Comprado en Estados Unidos</b><span>Cada producto se compra allá, a tiendas y distribuidores autorizados de la marca. No trabajamos con réplicas ni con mercancía de origen dudoso.</span></li>
-      <li><b>Sellado de fábrica</b><span>Llega con el sello de seguridad intacto y en su empaque original, tal como se vende en USA.</span></li>
-      <li><b>Lote y vencimiento a la vista</b><span>En la página de cada producto ves la fecha de vencimiento del lote antes de pedirlo.</span></li>
-      <li><b>Revisas antes de pagar</b><span>Como pagas contraentrega, recibes el paquete primero. No hay pagos por adelantado.</span></li>
+      <li style="--i:0"><b>Comprado en Estados Unidos</b><span>Cada producto se compra allá, a tiendas y distribuidores autorizados de la marca. No trabajamos con réplicas ni con mercancía de origen dudoso.</span></li>
+      <li style="--i:1"><b>Sellado de fábrica</b><span>Llega con el sello de seguridad intacto y en su empaque original, tal como se vende en USA.</span></li>
+      <li style="--i:2"><b>Lote y vencimiento impresos</b><span>Cada envase trae su lote y su fecha de vencimiento. Si quieres saber la fecha antes de pedir, te la confirmamos por WhatsApp.</span></li>
+      <li style="--i:3"><b>Revisas antes de pagar</b><span>Como pagas contraentrega, recibes el paquete primero. No hay pagos por adelantado.</span></li>
     </ol>
-    <p class="orig__garantia"><b>Garantía de originalidad:</b> si un producto no es original, te devolvemos el 100% de tu dinero.</p>
   </div>
 </section>
 
@@ -381,19 +417,24 @@ function paginaProducto(p) {
   const d = off(p);
   const cat = CATS[p.cat];
   const nombreLargo = `${p.nombre} ${p.marca} ${p.tamano.split(" · ")[0]}`;
-  const descripcion = `${p.nombre} de ${p.marca} (${p.tamano}) original, importado de USA. ${plata(p.precio)} con envío gratis y pago contraentrega en Colombia.`;
+  const descripcion = `${p.nombre} de ${p.marca} (${p.tamano}) original${p.origen ? "" : ", traído de USA"}. ${plata(p.precio)} con envío gratis y pago contraentrega en Colombia.`;
+  const fotos = FOTOS[p.id].length ? FOTOS[p.id] : [1];
+  const pieFoto = ["empaque", "en ambiente", "detalle", "foto de la marca"];
+  const avisoBase = p.cat === "suplementos"
+    ? "Es un suplemento dietario, no un medicamento: no sirve para diagnosticar, tratar ni curar enfermedades y no reemplaza una alimentación balanceada. Consulta a tu médico si estás en embarazo, lactancia o tomas medicamentos. Mantener fuera del alcance de los niños."
+    : "Uso externo. Prueba primero en una zona pequeña y suspende el uso si notas irritación. Evita el contacto con los ojos.";
   const ficha = [
-    ["Marca", p.marca],
+    ["Marca", p.marca + (p.pais ? ` (${p.pais})` : "")],
     ["Presentación", p.tamano],
     ["Categoría", cat.nombre + (p.paso ? ` · ${p.paso}` : "")],
-    ["Origen", "Importado de Estados Unidos"],
+    ["Comprado en", compradoEn(p)],
     p.vence && ["Vence", vence(p.vence)],
     ["Envío", `Gratis a toda Colombia, ${ENVIO_TXT}`],
     ["Pago", "Contraentrega, en efectivo al recibir"],
     ["Cambios y devoluciones", `${C.devolucionDias} días`],
   ].filter(Boolean);
   const faq = [
-    [`¿${p.nombre} de ${p.marca} es original?`, `Sí. ${C.marca} lo compra en Estados Unidos a tiendas y distribuidores autorizados de ${p.marca} y lo entrega sellado de fábrica${p.vence ? `, con vencimiento ${vence(p.vence)}` : ""}. Si no es original te devolvemos el 100% del dinero.`],
+    [`¿${p.nombre} de ${p.marca} es original?`, `Sí. ${C.marca} lo compra en ${compradoEn(p)} a tiendas y distribuidores autorizados y lo entrega sellado de fábrica${p.vence ? `, con vencimiento ${vence(p.vence)}` : ""}. Si no es original te devolvemos el 100% del dinero.`],
     [`¿Cuánto cuesta ${p.nombre} en Colombia?`, `En ${C.marca} cuesta ${plata(p.precio)} COP con envío gratis a toda Colombia. Llevando 2 productos tienes ${Math.round(descuentoPara(2) * 100)}% de descuento y con 3 o más, ${Math.round(descuentoPara(3) * 100)}%.`],
     ["¿Puedo pagarlo contraentrega?", `Sí. Lo pides sin pagar nada y pagas en efectivo cuando te llega, según la cobertura de la transportadora en tu municipio. La entrega tarda de ${ENVIO_TXT}.`],
     ["¿Cómo se usa?", p.uso],
@@ -413,11 +454,10 @@ function paginaProducto(p) {
       description: p.desc,
       sku: p.id,
       ...(p.gtin && { gtin: p.gtin }),
-      ...(p.foto && { image: [`${C.url}/${p.foto}`] }),
+      ...(conFotos(p) && { image: fotos.map((n) => `${C.url}/${img(p, n)}`) }),
       brand: { "@type": "Brand", name: p.marca },
       category: cat.nombre,
-      countryOfOrigin: { "@type": "Country", name: "Estados Unidos" },
-      additionalProperty: [{ "@type": "PropertyValue", name: "Presentación", value: p.tamano }, ...(p.vence ? [{ "@type": "PropertyValue", name: "Vencimiento", value: vence(p.vence) }] : []), ...p.claves.map((c) => ({ "@type": "PropertyValue", name: "Dato de la etiqueta", value: c }))],
+      additionalProperty: [{ "@type": "PropertyValue", name: "Presentación", value: p.tamano }, { "@type": "PropertyValue", name: "Comprado en", value: compradoEn(p) }, ...(p.vence ? [{ "@type": "PropertyValue", name: "Vencimiento", value: vence(p.vence) }] : []), ...p.claves.map((c) => ({ "@type": "PropertyValue", name: "Dato de la etiqueta", value: c }))],
       ...(p.resenas && { aggregateRating: { "@type": "AggregateRating", ratingValue: p.resenas.promedio, reviewCount: p.resenas.total } }),
       offers: ofertaLd(p),
     },
@@ -432,18 +472,23 @@ function paginaProducto(p) {
     tipo: "product",
     titulo: `${nombreLargo} original en Colombia | ${C.marca}`,
     descripcion,
-    extra: `<meta property="product:price:amount" content="${p.precio}">\n<meta property="product:price:currency" content="COP">\n<meta property="product:brand" content="${esc(p.marca)}">\n${p.foto ? `<meta property="og:image" content="${C.url}/${esc(p.foto)}">\n` : ""}`,
+    extra: `<meta property="product:price:amount" content="${p.precio}">\n<meta property="product:price:currency" content="COP">\n<meta property="product:brand" content="${esc(p.marca)}">\n`,
+    ...(conFotos(p) && { imagen: img(p, 1) }),
     jsonld,
   }) + `
 <div class="wrap pp">
   <nav class="migas" aria-label="Ruta"><a href="${raiz}">Inicio</a> <i>›</i> <a href="${raiz}#${p.cat}">${cat.nombre}</a> <i>›</i> <span>${esc(p.nombre)}</span></nav>
   <div class="pp__grid">
-    <div class="pp__foto">
-      <img src="${raiz}${img(p)}" alt="${esc(nombreLargo)}" width="240" height="240" fetchpriority="high">
-      ${d ? `<span class="tag tag--off">${d}% OFF</span>` : p.etiqueta ? `<span class="tag">${esc(p.etiqueta)}</span>` : ""}
+    <div class="gal js-gal">
+      <div class="gal__pista" tabindex="0" aria-label="Fotos de ${esc(p.nombre)}">
+        ${fotos.map((n, i) => `<figure class="gal__foto"><img src="${raiz}${img(p, n)}"${srcset(p, n, raiz, "(min-width:860px) 520px, 100vw")} alt="${esc(nombreLargo)}: ${pieFoto[i] || "foto " + (i + 1)}" width="900" height="900"${i === 0 ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"'}></figure>`).join("\n        ")}
+      </div>${fotos.length > 1 ? `
+      <div class="gal__minis">${fotos.map((n, i) => `<button type="button" aria-label="Ver foto ${i + 1} de ${fotos.length}" aria-current="${i === 0}"><img src="${raiz}${img(p, n, true)}" alt="" width="440" height="440" loading="lazy" decoding="async"></button>`).join("")}</div>` : ""}
+      ${d ? `<span class="tag tag--off">${d}% OFF</span>` : p.etiqueta ? `<span class="tag">${esc(p.etiqueta)}</span>` : ""}${conFotos(p) ? `
+      <p class="gal__nota">Imágenes de referencia. La presentación puede variar según el lote.</p>` : ""}
     </div>
     <div class="pp__info">
-      <p class="card__marca">${esc(p.marca)} · Importado de USA</p>
+      <p class="card__marca">${esc(p.marca)} · ${traido(p)}</p>
       <h1>${esc(p.nombre)} <span>${esc(p.tamano)}</span></h1>
       <p class="pp__desc">${esc(p.desc)}</p>
       <p class="precio precio--xl"><b>${plata(p.precio)}</b>${p.antes ? ` <s>${plata(p.antes)}</s>` : ""}</p>
@@ -459,11 +504,13 @@ ${ofertas}
     </div>
   </div>
 
-  <div class="pp__cols">
-    <section><h2>Cómo se usa</h2><p>${esc(p.uso)}</p>
-      <h2>Datos clave de la etiqueta</h2><ul class="lista">${p.claves.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></section>
-    <section><h2>Ficha del producto</h2>
+  <div class="bento">
+    <section class="bx bx--desc"><p class="ceja">Descripción</p><h2>Qué es ${esc(p.corto || p.nombre)}</h2>${(p.detalle || [p.desc]).map((t) => `<p>${esc(t)}</p>`).join("")}</section>
+    <section class="bx bx--trae bx--tinta"><p class="ceja">En la etiqueta</p><h2>Lo que trae</h2><ul class="chips">${p.claves.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></section>
+    <section class="bx bx--uso bx--agua"><p class="ceja">Modo de uso${p.paso ? ` · ${esc(p.paso)}` : ""}</p><h2>Cómo se usa</h2><p>${esc(p.uso)}</p></section>
+    <section class="bx bx--ficha"><p class="ceja">Ficha</p><h2>Datos del producto</h2>
       <dl class="ficha">${ficha.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl></section>
+    <section class="bx bx--aviso"><p>${p.aviso ? esc(p.aviso) + " " : ""}${avisoBase}</p><p>La descripción resume la información que publica la marca${p.fuente ? ` (<a href="${esc(p.fuente)}" rel="nofollow noopener" target="_blank">ver fuente</a>)` : ""}. Si algo no coincide con la etiqueta del envase, manda la etiqueta.</p></section>
   </div>
 ${relacionados.length ? `
   <section class="pp__rel"><h2>Va bien con</h2>
@@ -534,7 +581,7 @@ function llms() {
   return `# ${C.marca}
 
 > ${C.marca} es una tienda en línea colombiana de suplementos dietarios y productos para el cuidado de la piel (skincare) 100% originales, importados de Estados Unidos. Vende a toda Colombia con envío gratis y pago contraentrega (el cliente paga en efectivo al recibir).
-${C.modoDemo ? "\nNota: catálogo de muestra. Los precios y fechas son de ejemplo hasta que la tienda publique su inventario real.\n" : ""}
+${C.modoDemo ? "\nNota: los precios publicados son de referencia y están por confirmar.\n" : ""}
 ## Cómo se compra
 
 - Pago: contraentrega, en efectivo al recibir, según cobertura de la transportadora en el municipio
@@ -569,7 +616,7 @@ const robots = () => `User-agent: *\nAllow: /\n\n${BOTS.map((b) => `User-agent: 
 const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url><loc>${C.url}/</loc><lastmod>${HOY}</lastmod></url>
-${PRODUCTOS.map((p) => `  <url><loc>${urlP(p)}</loc><lastmod>${HOY}</lastmod><image:image><image:loc>${C.url}/${img(p)}</image:loc></image:image></url>`).join("\n")}
+${PRODUCTOS.map((p) => `  <url><loc>${urlP(p)}</loc><lastmod>${HOY}</lastmod>${(FOTOS[p.id].length ? FOTOS[p.id] : [1]).map((n) => `<image:image><image:loc>${C.url}/${img(p, n)}</image:loc></image:image>`).join("")}</url>`).join("\n")}
   <url><loc>${C.url}/legal/</loc><lastmod>${HOY}</lastmod></url>
 </urlset>
 `;
@@ -585,14 +632,15 @@ const catalogoJson = () => JSON.stringify({
   envio: { costo: 0, dias_habiles: [C.envio.diasMin, C.envio.diasMax] },
   descuento_por_cantidad: C.escalas.map((e) => ({ desde_unidades: e.desde, porcentaje: Math.round(e.descuento * 100) })),
   devolucion_dias: C.devolucionDias,
-  productos: PRODUCTOS.map((p) => ({ id: p.id, nombre: p.nombre, marca: p.marca, categoria: p.cat, presentacion: p.tamano, precio: p.precio, ...(p.antes && { precio_antes: p.antes }), disponible: true, origen: "Estados Unidos", ...(p.vence && { vence: p.vence }), url: urlP(p), descripcion: p.desc, uso: p.uso, datos: p.claves })),
+  productos: PRODUCTOS.map((p) => ({ id: p.id, nombre: p.nombre, marca: p.marca, categoria: p.cat, presentacion: p.tamano, precio: p.precio, ...(p.antes && { precio_antes: p.antes }), disponible: true, comprado_en: compradoEn(p), ...(p.pais && { pais_marca: p.pais }), ...(p.fuente && { fuente: p.fuente }), ...(p.vence && { vence: p.vence }), url: urlP(p), ...(conFotos(p) && { imagenes: FOTOS[p.id].map((n) => `${C.url}/${img(p, n)}`) }), descripcion: (p.detalle || [p.desc]).join(" "), uso: p.uso, datos: p.claves })),
 }, null, 1);
 
 // Datos mínimos que necesita el carrito en el navegador.
 const catalogoJs = () => "window.WETS=" + JSON.stringify({
   cfg: { marca: C.marca, wa: C.whatsapp, endpoint: C.pedidos.endpoint, escalas: C.escalas },
-  p: Object.fromEntries(PRODUCTOS.map((p) => [p.id, { n: p.nombre, m: p.marca, t: p.tamano, pr: p.precio, a: p.antes || 0, i: img(p), c: p.combina || [], k: p.cat, o: p.objetivos, ...(p.dropi && { d: p.dropi }) }])),
+  p: Object.fromEntries(PRODUCTOS.map((p) => [p.id, { n: p.nombre, m: p.marca, t: p.tamano, pr: p.precio, a: p.antes || 0, i: img(p, 1, true), c: p.combina || [], k: p.cat, o: p.objetivos, ...(p.dropi && { d: p.dropi }) }])),
   obj: Object.fromEntries(OBJETIVOS.map((o) => [o.id, o.nombre])),
+  objg: Object.fromEntries(OBJETIVOS.map((o) => [o.id, o.grupo])),
 }) + ";";
 
 const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#13201A"/><path d="M16 5c5 7.200 9 10.800 9 15.500a9 9 0 0 1-18 0C7 15.800 11 12.200 16 5z" fill="#EE4A1F"/></svg>`;
@@ -607,7 +655,7 @@ rmSync(join(RAIZ, "assets/p"), { recursive: true, force: true });
 escribir("index.html", portada());
 for (const p of PRODUCTOS) {
   escribir(`p/${p.id}/index.html`, paginaProducto(p));
-  if (!p.foto) escribir(`assets/p/${p.id}.svg`, dibujo(p));
+  if (!conFotos(p)) escribir(`assets/p/${p.id}.svg`, dibujo(p));
 }
 escribir("legal/index.html", legal());
 escribir("404.html", noEncontrada());
@@ -619,4 +667,5 @@ escribir("assets/catalogo.js", catalogoJs());
 escribir("assets/favicon.svg", favicon);
 escribir(`${C.indexNowKey}.txt`, C.indexNowKey);
 escribir(".nojekyll", "");
+if (sinFotos.length) console.warn(`Aviso: con menos de 3 fotos -> ${sinFotos.join(", ")}`);
 console.log(`Listo: portada + ${PRODUCTOS.length} productos${C.modoDemo ? " (modo demo: noindex)" : ""} -> ${C.url}/`);

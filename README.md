@@ -13,7 +13,8 @@ node build.mjs
 | Archivo | Qué contiene |
 | --- | --- |
 | `datos/config.mjs` | WhatsApp, dominio, datos legales, escalas de descuento, días de envío y devolución, puente de pedidos |
-| `datos/productos.mjs` | Productos, objetivos ("¿Qué quieres cuidar?") y rutinas armadas |
+| `datos/productos.mjs` | Productos, objetivos ("¿Qué quieres cuidar?"), rutinas armadas, cartas del hero y destacados |
+| `herramientas/fotos.mjs` | Convierte una imagen en las fotos del catálogo (WebP 900 y 440 px) |
 | `assets/wets.css` · `assets/wets.js` | Estilos y motor de compra (se editan a mano) |
 | `build.mjs` | Genera `index.html`, `p/<producto>/`, `legal/`, `sitemap.xml`, `robots.txt`, `llms.txt`, `catalogo.json` |
 
@@ -25,15 +26,22 @@ node servir.mjs
 
 Los HTML, `sitemap.xml`, `llms.txt`, `catalogo.json`, `assets/catalogo.js` y `assets/p/` son generados: no se editan a mano, se regeneran.
 
+## Catálogo y fotos
+
+El catálogo tiene los 26 productos reales del inventario, con descripciones tomadas de la página de cada marca (el enlace queda en cada ficha). Los precios son de referencia: confírmalos en `datos/productos.mjs`. Mientras `modoDemo` esté en `true`, el sitio muestra el aviso "Precios de referencia" y sale con `noindex`.
+
+Cada producto tiene 3 o 4 fotos en `assets/fotos/<id>-N.webp`: estudio, ambiente y detalle, generadas con Higgsfield a partir del empaque oficial, y la foto oficial de la marca cuando sirve. Para cambiar una foto:
+
+```bash
+node herramientas/fotos.mjs <id-del-producto> <número> <archivo-o-url>
+```
+
 ## Antes de vender
 
-El catálogo actual es **de muestra** (productos típicos con precios y vencimientos inventados). Mientras `modoDemo` esté en `true`, el sitio muestra un aviso y sale con `noindex` para que ningún buscador guarde esos precios.
-
-1. Cargar productos, precios y vencimientos reales en `datos/productos.mjs`.
-2. Poner fotos reales en `assets/fotos/` y apuntarlas con el campo `foto` (WebP cuadrado, 800 px). Sin foto se dibuja un envase genérico y Google no muestra la ficha de producto.
-3. Completar `whatsapp`, `empresa` (razón social, NIT, ciudad) y `geo` en `datos/config.mjs`.
-4. Revisar que las promesas del sitio sean las que se van a cumplir: envío gratis, días de entrega, 30 días de cambios, garantía de originalidad.
-5. Cambiar `modoDemo` a `false` y correr `node build.mjs`.
+1. Confirmar precios en `datos/productos.mjs` (y presentaciones marcadas como pendientes en el reporte de entrega).
+2. Completar `whatsapp`, `empresa` (razón social, NIT, ciudad) y `geo` en `datos/config.mjs`.
+3. Revisar que las promesas del sitio sean las que se van a cumplir: envío gratis, días de entrega, 30 días de cambios, garantía de originalidad.
+4. Cambiar `modoDemo` a `false` y correr `node build.mjs`.
 
 Los suplementos dietarios importados requieren registro sanitario INVIMA y los cosméticos, notificación sanitaria obligatoria. Los textos del sitio describen el producto sin prometer efectos de salud; conviene mantenerlos así.
 
