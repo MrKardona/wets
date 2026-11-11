@@ -39,7 +39,7 @@ const FOTOS = Object.fromEntries(PRODUCTOS.map((p) => {
 const conFotos = (p) => FOTOS[p.id].length > 0;
 const img = (p, n = 1, chica = false) => (conFotos(p) ? `assets/fotos/${p.id}-${Math.min(n, FOTOS[p.id].length)}${chica ? "s" : ""}.webp` : `assets/p/${p.id}.svg`);
 const srcset = (p, n, raiz, sizes) => (conFotos(p) ? ` srcset="${raiz}${img(p, n, true)} 440w, ${raiz}${img(p, n)} 900w" sizes="${sizes}"` : "");
-const numero = (p) => String(PRODUCTOS.indexOf(p) + 1).padStart(2, "0");
+
 const compradoEn = (p) => p.origen || "Estados Unidos";
 const traido = (p) => (p.origen ? `Marca de ${p.pais || p.origen}` : "Traído de USA");
 const urlP = (p) => `${C.url}/p/${p.id}/`;
@@ -192,7 +192,6 @@ function tarjeta(p, raiz) {
     <img src="${raiz}${img(p, 1, true)}"${srcset(p, 1, raiz, "(min-width:860px) 270px, (min-width:620px) 31vw, 46vw")} alt="${esc(nombre)}, ${esc(p.tamano)}" width="440" height="440" loading="lazy" decoding="async">${FOTOS[p.id].length > 1 ? `
     <img class="card__f2" data-src="${raiz}${img(p, 2, true)}" alt="" width="440" height="440" decoding="async">` : ""}
     ${d ? `<span class="tag tag--off">${d}% OFF</span>` : p.etiqueta ? `<span class="tag">${esc(p.etiqueta)}</span>` : ""}
-    <span class="card__n">N.º ${numero(p)}</span>
   </a>
   <div class="card__txt">
     <p class="card__marca">${esc(p.marca)}</p>
@@ -339,7 +338,7 @@ ${PRODUCTOS.filter((p) => p.cat === cat).map((p) => tarjeta(p, raiz)).join("\n")
   <div class="rail__fijo">
     <div class="wrap"><header class="sec__cab"><p class="ceja">Selección Wets</p><h2>${destacados.length} productos para empezar a conocernos</h2></header></div>
     <div class="rail__pista">
-      ${destacados.map((p, i) => `<a class="rail__c" href="p/${p.id}/"><img src="${img(p, 2, true)}"${srcset(p, 2, "", "(min-width:860px) 360px, 76vw")} alt="${esc(p.nombre)} ${esc(p.marca)}" width="900" height="900" loading="lazy" decoding="async"><span class="rail__n">${String(i + 1).padStart(2, "0")} / ${String(destacados.length).padStart(2, "0")}</span><div class="rail__txt"><small>${esc(p.marca)}</small><b>${esc(p.corto || p.nombre)}</b><span>${plata(p.precio)}</span></div></a>`).join("\n      ")}
+      ${destacados.map((p, i) => `<a class="rail__c" href="p/${p.id}/"><img src="${img(p, 2, true)}"${srcset(p, 2, "", "(min-width:860px) 360px, 76vw")} alt="${esc(p.nombre)} ${esc(p.marca)}" width="900" height="900" loading="lazy" decoding="async"><div class="rail__txt"><small>${esc(p.marca)}</small><b>${esc(p.corto || p.nombre)}</b><span>${plata(p.precio)}</span></div></a>`).join("\n      ")}
     </div>
   </div>
 </section>
