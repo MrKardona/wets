@@ -4,7 +4,7 @@
  "pais": "CO",
  "moneda": "COP",
  "actualizado": "2026-11-11",
- "muestra": true,
+ "muestra": false,
  "pago": "Contraentrega (efectivo al recibir)",
  "envio": {
   "costo": 0,

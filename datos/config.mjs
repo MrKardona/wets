@@ -12,7 +12,7 @@ export default {
 
   // WhatsApp que recibe pedidos y consultas: indicativo + número, sin "+" ni espacios.
   // Ejemplo: "573001234567". Vacío = el cliente elige el contacto al abrir WhatsApp.
-  whatsapp: "",
+  whatsapp: "573103956066",
   correo: "",
   instagram: "", // usuario sin @
   tiktok: "", // usuario sin @
@@ -45,5 +45,5 @@ export default {
   // true = catálogo de muestra: aparece el aviso y las páginas salen con "noindex"
   // para que Google y los buscadores de IA no guarden precios de ejemplo.
   // Ponlo en false cuando cargues productos, precios y fechas reales.
-  modoDemo: true,
+  modoDemo: false,
 };

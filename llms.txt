@@ -2,8 +2,6 @@
 
 > Wets es una tienda en línea colombiana de suplementos dietarios y productos para el cuidado de la piel (skincare) 100% originales, importados de Estados Unidos. Vende a toda Colombia con envío gratis y pago contraentrega (el cliente paga en efectivo al recibir).
 
-Nota: los precios publicados son de referencia y están por confirmar.
-
 ## Cómo se compra
 
 - Pago: contraentrega, en efectivo al recibir, según cobertura de la transportadora en el municipio
@@ -12,6 +10,7 @@ Nota: los precios publicados son de referencia y están por confirmar.
 - Cambios y devoluciones: 30 días desde la entrega; retracto legal de 5 días hábiles
 - Originalidad: productos comprados en Estados Unidos, sellados de fábrica, con lote y vencimiento visibles; devolución del 100% si no es original
 - Pedido: formulario "Pedir y pagar al recibir" en cada producto, sin crear cuenta
+- WhatsApp: +573103956066
 - Moneda: pesos colombianos (COP)
 
 ## Suplementos
