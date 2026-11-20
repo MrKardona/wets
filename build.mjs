@@ -94,7 +94,7 @@ const ICO = {
   gota: `<svg class="logo__gota" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0c3 4.4 6 7 6 10.2A6 6 0 0 1 0 10.2C0 7 3 4.400 6 0z"/></svg>`,
 };
 
-function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "", jsonld = [], imagen = "assets/img/caja.webp" }) {
+function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "", jsonld = [], imagen = "assets/marca/compartir.jpg" }) {
   const canonica = C.url + ruta;
   const g = C.geo;
   return `<!doctype html>
@@ -125,7 +125,7 @@ function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "",
 <meta property="og:image" content="${C.url}/${imagen}">
 <meta name="twitter:card" content="summary_large_image">
 ${extra}<link rel="icon" type="image/svg+xml" href="${raiz}assets/favicon.svg">
-<link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/fraunces-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/bodoni-moda-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/instrument-sans.woff2" crossorigin>
 <link rel="stylesheet" href="${raiz}assets/wets.css">
 <script>document.documentElement.className='js'</script>
@@ -137,7 +137,7 @@ ${jsonld.map(ld).join("\n")}
 <p class="aviso">Envío gratis a toda Colombia <i>·</i> Pagas al recibir<span class="aviso__x"> <i>·</i> 100% originales de USA</span></p>
 <header class="cab">
   <div class="wrap cab__in">
-    <a class="logo" href="${raiz || "./"}" aria-label="${esc(C.marca)}, ir al inicio">wets${ICO.gota}</a>
+    <a class="logo" href="${raiz || "./"}" aria-label="${esc(C.marca)}, ir al inicio"><img src="${raiz}assets/marca/logo.webp" alt="${esc(C.marca)} · Originales de USA" width="103" height="60"></a>
     <nav class="cab__nav" aria-label="Principal">
       <a href="${raiz}#suplementos">Suplementos</a>
       <a href="${raiz}#skincare">Skincare</a>
@@ -164,7 +164,7 @@ function pie(raiz) {
 <footer class="pie">
   <div class="wrap pie__grid">
     <div>
-      <a class="logo logo--pie" href="${raiz || "./"}">wets${ICO.gota}</a>
+      <a class="logo logo--pie" href="${raiz || "./"}"><img src="${raiz}assets/marca/logo-grande.webp" alt="${esc(C.marca)} · Originales de USA" width="190" height="110" loading="lazy" decoding="async"></a>
       <p>${esc(C.lema)} Suplementos y productos para el cuidado de la piel importados de Estados Unidos, con envío gratis y pago contraentrega en Colombia.</p>
     </div>
     <nav aria-label="Tienda"><h2>Tienda</h2><a href="${raiz}#suplementos">Suplementos</a><a href="${raiz}#skincare">Skincare</a><a href="${raiz}#rutinas">Rutinas armadas</a><a href="${raiz}#quiz">Armar mi rutina</a></nav>
@@ -223,6 +223,8 @@ const tiendaLd = () => ({
   name: C.marca,
   url: C.url + "/",
   slogan: C.lema,
+  logo: C.url + "/assets/marca/logo-grande.webp",
+  image: C.url + "/assets/marca/compartir.jpg",
   description: "Tienda en línea de suplementos y productos para el cuidado de la piel originales, importados de Estados Unidos, con envío gratis y pago contraentrega en Colombia.",
   areaServed: { "@type": "Country", name: "Colombia" },
   currenciesAccepted: "COP",
