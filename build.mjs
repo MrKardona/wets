@@ -110,7 +110,7 @@ function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "",
 <link rel="alternate" hreflang="x-default" href="${canonica}">
 <link rel="alternate" type="text/plain" href="${C.url}/llms.txt" title="Resumen para asistentes de IA">
 <link rel="alternate" type="application/json" href="${C.url}/catalogo.json" title="Catálogo de ${esc(C.marca)}">
-<meta name="theme-color" content="#13201A">
+<meta name="theme-color" content="#E0338A">
 <meta name="geo.region" content="${esc(g.region)}">${g.ciudad ? `
 <meta name="geo.placename" content="${esc(g.ciudad)}, Colombia">` : ""}${g.lat != null && g.lon != null ? `
 <meta name="geo.position" content="${g.lat};${g.lon}">
@@ -125,7 +125,7 @@ function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "",
 <meta property="og:image" content="${C.url}/${imagen}">
 <meta name="twitter:card" content="summary_large_image">
 ${extra}<link rel="icon" type="image/svg+xml" href="${raiz}assets/favicon.svg">
-<link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/bricolage-grotesque.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/fraunces-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/instrument-sans.woff2" crossorigin>
 <link rel="stylesheet" href="${raiz}assets/wets.css">
 <script>document.documentElement.className='js'</script>
@@ -309,10 +309,11 @@ ${PRODUCTOS.filter((p) => p.cat === cat).map((p) => tarjeta(p, raiz)).join("\n")
     jsonld,
   }) + `
 <section class="hero">
+  <i class="chispa" style="left:8%;top:14%;--t:18px;--d:0s" aria-hidden="true"></i><i class="chispa chispa--f" style="left:44%;top:9%;--t:12px;--d:.9s" aria-hidden="true"></i><i class="chispa" style="left:90%;top:38%;--t:16px;--d:1.6s" aria-hidden="true"></i><i class="chispa chispa--f" style="left:60%;top:70%;--t:10px;--d:2.2s" aria-hidden="true"></i><i class="chispa" style="left:30%;top:86%;--t:14px;--d:1.2s" aria-hidden="true"></i><i class="chispa chispa--f" style="left:96%;top:82%;--t:11px;--d:.4s" aria-hidden="true"></i><i class="chispa" style="left:52%;top:40%;--t:9px;--d:2s" aria-hidden="true"></i>
   <div class="wrap hero__grid">
     <div class="hero__txt">
       <p class="ceja">Importado de Estados Unidos · Entrega en toda Colombia</p>
-      <h1>Suplementos y skincare <em>originales</em>, traídos de USA. Pagas al recibir.</h1>
+      <h1>Suplementos y skincare <em>originales,</em> traídos de USA. Pagas al recibir.</h1>
       <p class="hero__sub">Marcas como ${["Centrum", "Medicube", "Nature's Bounty", "Anua"].join(", ")}, compradas en Estados Unidos y entregadas en tu casa en ${ENVIO_TXT}. Sin pagos por adelantado.</p>
       <div class="hero__cta">
         <a class="cod" href="#suplementos">${ICO.billete}Ver productos</a>
@@ -642,7 +643,7 @@ const catalogoJs = () => "window.WETS=" + JSON.stringify({
   objg: Object.fromEntries(OBJETIVOS.map((o) => [o.id, o.grupo])),
 }) + ";";
 
-const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#13201A"/><path d="M16 5c5 7.200 9 10.800 9 15.500a9 9 0 0 1-18 0C7 15.800 11 12.200 16 5z" fill="#EE4A1F"/></svg>`;
+const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#3B0A2A"/><path d="M16 5c5 7.200 9 10.800 9 15.500a9 9 0 0 1-18 0C7 15.800 11 12.200 16 5z" fill="#FF6FAE"/></svg>`;
 
 const noEncontrada = () => cabeza({ raiz: `${new URL(C.url).pathname.replace(/\/$/, "")}/`, ruta: "/404.html", titulo: `Página no encontrada | ${C.marca}`, descripcion: "Esta página no existe." }) + `
 <div class="wrap legal"><h1>Esta página no existe</h1><p>Puede que el producto haya cambiado de dirección. <a href="${C.url}/">Volver a la tienda</a>.</p></div>
