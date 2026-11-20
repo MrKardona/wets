@@ -122,8 +122,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .sec--agua{background:linear-gradient(150deg,#FCE4EE,#F9CFE0 50%,#EFD9FA)}
 .sec--obj{padding-bottom:1rem}
 .js .rev{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s cubic-bezier(.16,1,.3,1)}
-.js .card.rev,.js .rut.rev,.js .bx.rev{transform:translateY(46px) rotate(2.4deg) scale(.95);transition-duration:.8s}
-.js .card.rev:nth-child(even),.js .rut.rev:nth-child(even),.js .bx.rev:nth-child(even){transform:translateY(46px) rotate(-2.4deg) scale(.95)}
+.js .card.rev,.js .rut.rev,.js .bx.rev{transform:translateY(30px);transition-duration:.8s}
 .js .rev.vis,.js .card.rev.vis,.js .rut.rev.vis,.js .bx.rev.vis{opacity:1;transform:none}
 .sec__cab h2 .pal{display:inline-block}
 
@@ -496,8 +495,6 @@ select.control{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.
 .card:hover .btn--tinta:not(.ok){background:var(--grad);border-color:transparent}
 .card:hover .btn--tinta::after{animation:barre 1.2s .2s ease-out}
 .card .btn--tinta:active{transform:scale(.96)}
-.js .card.rev{transform:translateY(80px) rotateX(32deg) rotate(4deg) scale(.88);transition:opacity .6s,transform 1s cubic-bezier(.34,1.3,.55,1)}
-.js .card.rev:nth-child(even){transform:translateY(80px) rotateX(32deg) rotate(-4deg) scale(.88)}
 .vuelo{position:fixed;z-index:120;border-radius:16px;object-fit:cover;pointer-events:none;box-shadow:0 20px 40px -12px rgba(214,23,122,.6);transition:transform .7s cubic-bezier(.5,-.3,.7,.4),opacity .7s ease-in,border-radius .7s}
 .estalla{position:fixed;z-index:121;width:12px;aspect-ratio:1;pointer-events:none;background:var(--c,#FF8FC1);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);animation:estalla .8s cubic-bezier(.2,.8,.3,1) forwards}
 @keyframes estalla{to{translate:var(--x) var(--y);rotate:180deg;scale:.2;opacity:0}}
