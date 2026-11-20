@@ -473,3 +473,34 @@ select.control{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.
 .mano__c.frente{box-shadow:0 0 0 3px rgba(255,143,193,.55),0 30px 60px -18px rgba(214,23,122,.65)}
 .mano__c img{transition:scale .9s cubic-bezier(.16,1,.3,1)}
 .mano__c.frente img{scale:1.05}
+
+/* Tarjetas con efecto wow: borde holográfico que gira, profundidad 3D, brillo que barre la foto,
+   entrada como cartas repartidas y la foto que vuela al carrito (ver wets.js). */
+@property --giro{syntax:"<angle>";inherits:false;initial-value:0deg}
+.card{transform-style:preserve-3d}
+.card:hover{border-color:transparent;box-shadow:0 34px 60px -22px rgba(214,23,122,.5),0 0 40px -10px rgba(255,143,193,.55)}
+.card::before{content:"";position:absolute;inset:-2px;z-index:3;border-radius:24px;padding:2.5px;background:conic-gradient(from var(--giro),#FF8FC1,#D6177A,#EBD7FF,#FFE3F0,#B5179E,#FF5FA2,#FF8FC1);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s;animation:gira 2.6s linear infinite paused;pointer-events:none}
+.card:hover::before{opacity:1;animation-play-state:running}
+@keyframes gira{to{--giro:360deg}}
+.card__img,.card__txt{transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.card:hover .card__img{transform:translateZ(34px)}
+.card:hover .card__txt{transform:translateZ(18px)}
+.card__img::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.75) 46%,rgba(255,190,225,.55) 52%,transparent 66%);translate:-130% 0}
+.card:hover .card__img::after{animation:barre 1.1s ease-out}
+.card.brilla .card__img::after{animation:barre 1.4s .45s ease-out}
+.card__img .tag--off{background:linear-gradient(100deg,#D6177A,#FF5FA2,#B5179E,#D6177A);background-size:250% 100%;animation:latido 2.4s ease-in-out infinite,corre 3s linear infinite;box-shadow:0 6px 16px -6px rgba(214,23,122,.7)}
+@keyframes latido{50%{scale:1.09}}
+@keyframes corre{to{background-position:-250% 0}}
+.card .btn--tinta{position:relative;overflow:hidden;isolation:isolate}
+.card .btn--tinta::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.5) 50%,transparent 65%);translate:-120% 0}
+.card:hover .btn--tinta:not(.ok){background:var(--grad);border-color:transparent}
+.card:hover .btn--tinta::after{animation:barre 1.2s .2s ease-out}
+.card .btn--tinta:active{transform:scale(.96)}
+.js .card.rev{transform:translateY(80px) rotateX(32deg) rotate(4deg) scale(.88);transition:opacity .6s,transform 1s cubic-bezier(.34,1.3,.55,1)}
+.js .card.rev:nth-child(even){transform:translateY(80px) rotateX(32deg) rotate(-4deg) scale(.88)}
+.vuelo{position:fixed;z-index:120;border-radius:16px;object-fit:cover;pointer-events:none;box-shadow:0 20px 40px -12px rgba(214,23,122,.6);transition:transform .7s cubic-bezier(.5,-.3,.7,.4),opacity .7s ease-in,border-radius .7s}
+.estalla{position:fixed;z-index:121;width:12px;aspect-ratio:1;pointer-events:none;background:var(--c,#FF8FC1);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);animation:estalla .8s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes estalla{to{translate:var(--x) var(--y);rotate:180deg;scale:.2;opacity:0}}
+.cab__carro.recibe{animation:recibe .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes recibe{40%{scale:1.18;background:var(--agua)}}
+@media (prefers-reduced-motion:reduce){.js .card.rev,.js .card.rev:nth-child(even){opacity:1;transform:none}.card::before,.card__img .tag--off{animation:none}.card:hover .card__img,.card:hover .card__txt{transform:none}}

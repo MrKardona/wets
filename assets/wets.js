@@ -331,8 +331,40 @@
     const texto = b.textContent;
     b.textContent = '¡Agregado!'; b.classList.add('ok');
     setTimeout(() => { b.textContent = texto; b.classList.remove('ok'); }, 1400);
+    const tarjeta = b.closest('.card');
+    if (tarjeta && !QUIETO) return volarAlCarro(tarjeta, b);
     abrirCarro();
   });
+
+  // Chispas desde el botón y la foto del producto volando en arco hasta el carrito.
+  function volarAlCarro(tarjeta, boton) {
+    const rb = boton.getBoundingClientRect();
+    ['#FF8FC1', '#D6177A', '#EBD7FF', '#FF5FA2', '#fff', '#B5179E', '#FF8FC1', '#FFD1E6'].forEach((color, k) => {
+      const s = document.createElement('i');
+      const ang = (k / 8) * Math.PI * 2, d = 46 + Math.random() * 30;
+      s.className = 'estalla';
+      s.style.cssText = 'left:' + (rb.left + rb.width / 2 - 6) + 'px;top:' + (rb.top + rb.height / 2 - 6) + 'px;--c:' + color + ';--x:' + Math.round(Math.cos(ang) * d) + 'px;--y:' + Math.round(Math.sin(ang) * d) + 'px';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 850);
+    });
+    const origen = $('.card__img img', tarjeta), carroBtn = $$('.js-abrir-carro').find((x) => x.offsetParent);
+    if (!origen || !carroBtn) return abrirCarro();
+    const ro = origen.getBoundingClientRect(), rc = carroBtn.getBoundingClientRect();
+    const v = document.createElement('img');
+    v.className = 'vuelo'; v.src = origen.currentSrc || origen.src; v.alt = '';
+    v.style.cssText = 'left:' + ro.left + 'px;top:' + ro.top + 'px;width:' + ro.width + 'px;height:' + ro.height + 'px';
+    document.body.appendChild(v);
+    const dx = rc.left + rc.width / 2 - (ro.left + ro.width / 2), dy = rc.top + rc.height / 2 - (ro.top + ro.height / 2);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      v.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.12) rotate(-25deg)';
+      v.style.opacity = '.35'; v.style.borderRadius = '50%';
+    }));
+    setTimeout(() => {
+      v.remove();
+      carroBtn.classList.remove('recibe'); void carroBtn.offsetWidth; carroBtn.classList.add('recibe');
+      setTimeout(abrirCarro, 260);
+    }, 700);
+  }
 
   $$('.js-ofertas').forEach((o) => o.addEventListener('change', () => {
     $$('.oferta', o).forEach((l) => l.classList.toggle('is-elegida', $('input', l).checked));
@@ -429,6 +461,7 @@
         const el = en.target;
         el.classList.add('vis');
         io.unobserve(el);
+        if (el.classList.contains('card') && !QUIETO) { el.classList.add('brilla'); setTimeout(() => el.classList.remove('brilla'), 2200); }
         // Al terminar se limpia para no retrasar el hover de las tarjetas.
         setTimeout(() => { el.classList.remove('rev', 'vis'); el.style.transitionDelay = ''; }, 1500);
       });
