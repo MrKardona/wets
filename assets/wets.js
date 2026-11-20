@@ -470,6 +470,43 @@
     });
   }
 
+  // Mano de cartas del hero: baraja sola, se inclina con el cursor y se pausa al pasar encima.
+  const mano = $('.mano');
+  if (mano) {
+    const cartas = $$('.mano__c', mano);
+    let pos = cartas.map((c) => parseInt(c.style.getPropertyValue('--i'), 10) || 0);
+    const pintar = () => cartas.forEach((c, k) => {
+      c.style.setProperty('--i', pos[k]);
+      c.style.setProperty('--z', 5 - Math.abs(pos[k]));
+      c.classList.toggle('frente', pos[k] === 0);
+    });
+    pintar();
+    if (!QUIETO) {
+      let reloj = 0;
+      const girar = () => {
+        if (document.hidden) return;
+        cartas.forEach((c) => { c.style.animation = 'none'; });
+        pos = pos.map((i, k) => {
+          if (i < 2) return i + 1;
+          // La del extremo vuela en arco por detrás hasta el otro lado.
+          cartas[k].classList.add('vuela');
+          setTimeout(() => cartas[k].classList.toggle('vuela', false), 480);
+          return -2;
+        });
+        pintar();
+      };
+      const iniciar = () => { clearInterval(reloj); reloj = setInterval(girar, 2600); };
+      mano.addEventListener('pointerenter', () => clearInterval(reloj));
+      mano.addEventListener('pointerleave', () => { mano.style.setProperty('--rx', '0deg'); mano.style.setProperty('--ry', '0deg'); iniciar(); });
+      if (FINO) mano.addEventListener('pointermove', (e) => {
+        const r = mano.getBoundingClientRect();
+        mano.style.setProperty('--ry', (((e.clientX - r.left) / r.width - 0.5) * 16).toFixed(2) + 'deg');
+        mano.style.setProperty('--rx', ((0.5 - (e.clientY - r.top) / r.height) * 10).toFixed(2) + 'deg');
+      });
+      setTimeout(iniciar, 1600);
+    }
+  }
+
   // Carril de destacados: en escritorio queda fijo y el scroll lo mueve de lado.
   const rail = $('.js-rail');
   const medirRail = () => {
