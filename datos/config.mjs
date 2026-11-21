@@ -27,6 +27,11 @@ export default {
   envio: { diasMin: 2, diasMax: 5 }, // envío gratis, días hábiles
   devolucionDias: 30,
 
+  // Cositas bajo encargo (productos de Las Cositas de María E, datos/encargo.json).
+  //   margen: lo que se suma a su precio (0.2 = 20%). El precio queda redondeado a ...900.
+  //   dias: entrega de los productos bajo encargo, días hábiles.
+  encargo: { margen: 0.2, diasMin: 5, diasMax: 10 },
+
   // Descuento por cantidad sobre el total de unidades del pedido (igual que JOG).
   escalas: [
     { desde: 3, descuento: 0.1 },

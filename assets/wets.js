@@ -12,6 +12,8 @@
   const W = window.WETS;
   if (!W || typeof HTMLDialogElement !== 'function') return;
   const CFG = W.cfg, P = W.p;
+  // Los productos bajo encargo llegan con lo mínimo; se completan aquí.
+  for (const id in P) if (P[id].e) Object.assign(P[id], { a: P[id].a || 0, i: 'assets/fotos/' + id + '-1s.webp', c: [], k: 'encargo', o: [] }, {});
   const RAIZ = new URL('..', document.currentScript.src).href;
 
   const $ = (s, r) => (r || document).querySelector(s);
@@ -101,7 +103,7 @@
       : '<div class="meta meta--ok">Tienes ' + Math.round(c.d * 100) + '% de descuento por cantidad<div class="meta__barra"><i style="width:100%"></i></div></div>';
     const lineas = c.lineas.map((l) =>
       '<div class="item"><a href="' + url(l.id) + '" tabindex="-1"><img src="' + foto(l.id) + '" alt="" width="64" height="64"></a>'
-      + '<div><a href="' + url(l.id) + '">' + escapar(l.p.n) + '</a><small>' + escapar(l.p.m + ' · ' + l.p.t) + '</small>'
+      + '<div><a href="' + url(l.id) + '">' + escapar(l.p.n) + '</a><small>' + escapar(l.p.m + ' · ' + l.p.t + (l.p.e ? ' · Bajo encargo' : '')) + '</small>'
       + '<div class="cant"><button type="button" data-acc="menos" data-id="' + l.id + '" aria-label="Quitar una unidad">−</button><span>' + l.q + '</span><button type="button" data-acc="mas" data-id="' + l.id + '" aria-label="Agregar una unidad">+</button></div></div>'
       + '<div class="item__der"><span>' + plata(l.total) + '</span><button type="button" class="quitar" data-acc="quitar" data-id="' + l.id + '">Quitar</button></div></div>').join('');
     const sugeridos = [];
@@ -229,7 +231,7 @@
   function mensajeWhatsApp(c, ref) {
     const v = (campo) => f[campo].value.trim();
     return ['*Pedido contraentrega · ' + CFG.marca + '*', 'Ref: ' + ref, '']
-      .concat(c.lineas.map((l) => '• ' + l.q + ' × ' + l.p.n + ' (' + l.p.m + ', ' + l.p.t + ') — ' + plata(l.total)))
+      .concat(c.lineas.map((l) => '• ' + l.q + ' × ' + l.p.n + ' (' + l.p.m + ', ' + l.p.t + ')' + (l.p.e ? ' [bajo encargo]' : '') + ' — ' + plata(l.total)))
       .concat(['', 'Subtotal: ' + plata(c.subtotal)])
       .concat(c.d ? ['Descuento por cantidad (' + Math.round(c.d * 100) + '%): -' + plata(c.ahorro)] : [])
       .concat(['Envío: Gratis', '*Total a pagar al recibir: ' + plata(c.total) + '*', '',
@@ -474,15 +476,13 @@
     });
   }
 
-  // Cartas: se inclinan hacia el cursor y muestran la segunda foto.
+  // Cartas: el brillo sigue al cursor y muestran la segunda foto.
   if (FINO && !QUIETO) {
     $$('.card').forEach((card) => {
       card.addEventListener('pointermove', (e) => {
         const r = card.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
         card.classList.add('mueve');
-        card.style.setProperty('--ry', ((x - .5) * 9).toFixed(2) + 'deg');
-        card.style.setProperty('--rx', ((.5 - y) * 9).toFixed(2) + 'deg');
         card.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
         card.style.setProperty('--my', (y * 100).toFixed(1) + '%');
       });
@@ -501,6 +501,38 @@
       f2.src = f2.dataset.src;
       f2.removeAttribute('data-src');
     });
+  }
+
+  // Cositas bajo encargo: buscador y filtro por grupo.
+  const buscar = $('.js-buscar');
+  if (buscar) {
+    const grupos = $$('.js-grupo'), botones = $$('.js-grupos button');
+    let grupo = '';
+    const sinTildes = (t) => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    const aplicar = () => {
+      const q = sinTildes(buscar.value.trim());
+      let total = 0;
+      grupos.forEach((g) => {
+        let n = 0;
+        $$('.card', g).forEach((card) => {
+          const ve = (!grupo || card.dataset.grupo === grupo) && (!q || sinTildes(card.dataset.busca).indexOf(q) >= 0);
+          card.classList.toggle('fuera', !ve);
+          if (ve) n++;
+        });
+        g.hidden = !n;
+        total += n;
+      });
+      $('.js-vacio').hidden = total > 0;
+    };
+    buscar.addEventListener('input', aplicar);
+    botones.forEach((b) => b.addEventListener('click', () => {
+      grupo = b.dataset.grupo;
+      botones.forEach((x) => x.classList.toggle('activo', x === b));
+      aplicar();
+    }));
+    // Si llega con #grupo desde la portada, se filtra ese grupo.
+    const desdeHash = botones.find((b) => b.dataset.grupo && location.hash && $('#' + CSS.escape(location.hash.slice(1)))?.dataset.grupo === b.dataset.grupo);
+    if (desdeHash) desdeHash.click();
   }
 
   // Mano de cartas del hero: baraja sola, se inclina con el cursor y se pausa al pasar encima.
