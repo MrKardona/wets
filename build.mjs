@@ -22,7 +22,7 @@ const envioTxt = (p) => (p.encargo ? ENCARGO_TXT : ENVIO_TXT);
 
 // Cositas bajo encargo: datos/encargo.json (lo arma herramientas/encargo.mjs). El precio es el de
 // la tienda de origen más el margen de config, redondeado a ...900.
-const conMargen = (n) => Math.ceil((n * (1 + C.encargo.margen)) / 1000) * 1000 - 100;
+const conMargen = (n) => (C.encargo.margen ? Math.ceil((n * (1 + C.encargo.margen)) / 1000) * 1000 - 100 : n); // sin margen: precio exacto de la tienda
 const ENCARGO = (existsSync(join(dirname(fileURLToPath(import.meta.url)), "datos/encargo.json"))
   ? JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "datos/encargo.json"), "utf8")) : [])
   .map((e) => ({

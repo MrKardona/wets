@@ -38,7 +38,7 @@ node herramientas/fotos.mjs <id-del-producto> <número> <archivo-o-url>
 
 ### Cositas bajo encargo
 
-Son los productos disponibles de Las Cositas de María E (lascositasdemariae.com), con permiso de la tienda. Viven en `datos/encargo.json` y se muestran en `encargo/` (con buscador y grupos), en una sección de la portada y en su propia ficha. El precio es el de la tienda más `encargo.margen` de `datos/config.mjs` (20% por ahora), redondeado a ...900. La entrega sale de `encargo.diasMin` y `encargo.diasMax`.
+Son los productos disponibles de Las Cositas de María E (lascositasdemariae.com), con permiso de la tienda. Viven en `datos/encargo.json` y se muestran en `encargo/` (con buscador y grupos), en una sección de la portada y en su propia ficha. El precio es el de la tienda más `encargo.margen` de `datos/config.mjs` (por ahora 0: mismo precio de la tienda; con margen se redondea a ...900). La entrega sale de `encargo.diasMin` y `encargo.diasMax`.
 
 Para actualizarlos, baja su catálogo (`https://www.lascositasdemariae.com/products.json?limit=250&page=1`, `page=2`, … unidos en un solo arreglo de productos) y corre:
 

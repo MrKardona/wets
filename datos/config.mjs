@@ -28,9 +28,9 @@ export default {
   devolucionDias: 30,
 
   // Cositas bajo encargo (productos de Las Cositas de María E, datos/encargo.json).
-  //   margen: lo que se suma a su precio (0.2 = 20%). El precio queda redondeado a ...900.
+  //   margen: lo que se suma a su precio (0.2 = 20%; 0 = mismo precio de la tienda). Con margen se redondea a ...900.
   //   dias: entrega de los productos bajo encargo, días hábiles.
-  encargo: { margen: 0.2, diasMin: 5, diasMax: 10 },
+  encargo: { margen: 0, diasMin: 5, diasMax: 10 },
 
   // Descuento por cantidad sobre el total de unidades del pedido (igual que JOG).
   escalas: [
