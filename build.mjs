@@ -296,7 +296,7 @@ function seccionEncargo() {
   return `<section class="sec sec--encargo" id="encargo">
   <div class="wrap">
     <header class="sec__cab"><p class="ceja">Bajo encargo · ${ENCARGO.length} productos</p><h2>Cositas bajo encargo</h2><p>Vitaminas, cremas, cuidado del cabello y más marcas de Estados Unidos. Las pedimos para ti apenas confirmas y te llegan en ${ENCARGO_TXT}, con pago al recibir.</p></header>
-    <ul class="encargo__grupos">${KITS.length ? `<li><a class="encargo__kits" href="encargo/#kits">Kits armados <span>${KITS.length}</span></a></li>` : ""}${GRUPOS_ENCARGO.map((g) => `<li><a href="encargo/#${slug(g)}">${esc(g)} <span>${ENCARGO.filter((x) => x.grupo === g).length}</span></a></li>`).join("")}</ul>
+    <ul class="encargo__grupos">${GRUPOS_ENCARGO.map((g) => `<li><a href="encargo/#${slug(g)}">${esc(g)} <span>${ENCARGO.filter((x) => x.grupo === g).length}</span></a></li>`).join("")}</ul>
     <div class="grid">
 ${muestra.map((p) => tarjeta(p, "")).join("\n")}
     </div>
