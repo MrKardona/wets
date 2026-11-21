@@ -46,16 +46,18 @@
     pintarCuenta(true);
   }
   // items: [{id, q}] -> totales con el descuento por cantidad aplicado por unidad, como en JOG.
+  // Los productos bajo encargo (p.e) no tienen descuento por cantidad ni cuentan para alcanzarlo.
   function calcular(items) {
     const unidades = items.reduce((a, i) => a + i.q, 0);
-    const d = descuentoPara(unidades);
+    const conDescuento = items.reduce((a, i) => a + (P[i.id].e ? 0 : i.q), 0);
+    const d = descuentoPara(conDescuento);
     let subtotal = 0, total = 0;
     const lineas = items.map((i) => {
-      const p = P[i.id], unidad = Math.round(p.pr * (1 - d));
+      const p = P[i.id], unidad = p.e ? p.pr : Math.round(p.pr * (1 - d));
       subtotal += p.pr * i.q; total += unidad * i.q;
       return { id: i.id, p: p, q: i.q, unidad: unidad, total: unidad * i.q };
     });
-    return { lineas: lineas, unidades: unidades, d: d, subtotal: subtotal, ahorro: subtotal - total, total: total };
+    return { lineas: lineas, unidades: unidades, conDescuento: conDescuento, hayEncargo: conDescuento < unidades, d: d, subtotal: subtotal, ahorro: subtotal - total, total: total };
   }
   const itemsCarro = () => Object.keys(carro).map((id) => ({ id: id, q: carro[id] }));
 
@@ -96,11 +98,13 @@
       return;
     }
     const c = calcular(items);
-    const siguiente = CFG.escalas.slice().reverse().find((e) => e.desde > c.unidades);
+    const siguiente = CFG.escalas.slice().reverse().find((e) => e.desde > c.conDescuento);
     const tope = Math.max.apply(null, CFG.escalas.map((e) => e.desde));
-    const meta = siguiente
-      ? '<div class="meta">Agrega ' + (siguiente.desde - c.unidades) + ' producto' + (siguiente.desde - c.unidades > 1 ? 's' : '') + ' más y ahorra ' + Math.round(siguiente.descuento * 100) + '% en todo el pedido<div class="meta__barra"><i style="width:' + Math.round(c.unidades / tope * 100) + '%"></i></div></div>'
-      : '<div class="meta meta--ok">Tienes ' + Math.round(c.d * 100) + '% de descuento por cantidad<div class="meta__barra"><i style="width:100%"></i></div></div>';
+    const enQue = c.hayEncargo ? ' en los productos Wets (no aplica a los bajo encargo)' : ' en todo el pedido';
+    const meta = !c.conDescuento ? ''
+      : siguiente
+      ? '<div class="meta">Agrega ' + (siguiente.desde - c.conDescuento) + ' producto' + (siguiente.desde - c.conDescuento > 1 ? 's' : '') + ' Wets más y ahorra ' + Math.round(siguiente.descuento * 100) + '%' + enQue + '<div class="meta__barra"><i style="width:' + Math.round(c.conDescuento / tope * 100) + '%"></i></div></div>'
+      : '<div class="meta meta--ok">Tienes ' + Math.round(c.d * 100) + '% de descuento por cantidad' + (c.hayEncargo ? ' en los productos Wets' : '') + '<div class="meta__barra"><i style="width:100%"></i></div></div>';
     const lineas = c.lineas.map((l) =>
       '<div class="item"><a href="' + url(l.id) + '" tabindex="-1"><img src="' + foto(l.id) + '" alt="" width="64" height="64"></a>'
       + '<div><a href="' + url(l.id) + '">' + escapar(l.p.n) + '</a><small>' + escapar(l.p.m + ' · ' + l.p.t + (l.p.e ? ' · Bajo encargo' : '')) + '</small>'
@@ -174,7 +178,7 @@
   function pintarOpciones(elegida) {
     const p = P[directo];
     $('.js-ce-opciones', dlg).innerHTML = [1, 2, 3].map((n) => {
-      const d = descuentoPara(n), unidad = Math.round(p.pr * (1 - d));
+      const d = p.e ? 0 : descuentoPara(n), unidad = Math.round(p.pr * (1 - d));
       return '<label class="oferta"><input type="radio" name="cantidad" value="' + n + '"' + (n === elegida ? ' checked' : '') + '><span class="oferta__radio"></span>'
         + '<span><b>' + (n === 1 ? '1 unidad' : 'Lleva ' + n) + (d ? ' <span class="tag tag--off">' + Math.round(d * 100) + '% menos</span>' : '') + '</b>'
         + '<small>' + (n === 1 ? 'Precio normal' : plata(unidad) + ' cada uno') + '</small></span>'
@@ -523,6 +527,8 @@
         total += n;
       });
       $('.js-vacio').hidden = total > 0;
+      const kits = $('.js-kits');
+      if (kits) kits.hidden = !!(q || grupo);
     };
     buscar.addEventListener('input', aplicar);
     botones.forEach((b) => b.addEventListener('click', () => {

@@ -12,6 +12,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import C from "./datos/config.mjs";
 import { OBJETIVOS, PRODUCTOS, RUTINAS, PORTADA, DESTACADOS } from "./datos/productos.mjs";
+import { KITS_ENCARGO } from "./datos/kits-encargo.mjs";
 
 const RAIZ = dirname(fileURLToPath(import.meta.url));
 const HOY = new Date().toISOString().slice(0, 10);
@@ -39,6 +40,13 @@ const ENCARGO = (existsSync(join(dirname(fileURLToPath(import.meta.url)), "datos
 const GRUPOS_ENCARGO = [...new Set(ENCARGO.map((p) => p.grupo))];
 for (const p of ENCARGO) p.combina = ENCARGO.filter((x) => x.grupo === p.grupo && x.id !== p.id).slice(0, 40).sort((a, b) => Math.abs(a.base - p.base) - Math.abs(b.base - p.base)).slice(0, 4).map((x) => x.id);
 const TODOS = [...PRODUCTOS, ...ENCARGO];
+// Kits: solo con productos que siguen en el catálogo; si quedan menos de 2, el kit no se muestra.
+const enEncargo = new Set(ENCARGO.map((p) => p.id));
+const KITS = KITS_ENCARGO.map((k) => {
+  const faltan = k.items.filter((id) => !enEncargo.has(id));
+  if (faltan.length) console.warn(`Aviso: ${k.id} sin ${faltan.join(", ")} (agotado o fuera del catálogo)`);
+  return { ...k, items: k.items.filter((id) => enEncargo.has(id)) };
+}).filter((k) => k.items.length >= 2);
 const CATS = {
   suplementos: { nombre: "Suplementos", titulo: "Suplementos originales traídos de USA", ceja: "Cuerpo" },
   skincare: { nombre: "Skincare", titulo: "Skincare coreano y cuidado personal", ceja: "Piel" },
@@ -288,7 +296,7 @@ function seccionEncargo() {
   return `<section class="sec sec--encargo" id="encargo">
   <div class="wrap">
     <header class="sec__cab"><p class="ceja">Bajo encargo · ${ENCARGO.length} productos</p><h2>Cositas bajo encargo</h2><p>Vitaminas, cremas, cuidado del cabello y más marcas de Estados Unidos. Las pedimos para ti apenas confirmas y te llegan en ${ENCARGO_TXT}, con pago al recibir.</p></header>
-    <ul class="encargo__grupos">${GRUPOS_ENCARGO.map((g) => `<li><a href="encargo/#${slug(g)}">${esc(g)} <span>${ENCARGO.filter((x) => x.grupo === g).length}</span></a></li>`).join("")}</ul>
+    <ul class="encargo__grupos">${KITS.length ? `<li><a class="encargo__kits" href="encargo/#kits">Kits armados <span>${KITS.length}</span></a></li>` : ""}${GRUPOS_ENCARGO.map((g) => `<li><a href="encargo/#${slug(g)}">${esc(g)} <span>${ENCARGO.filter((x) => x.grupo === g).length}</span></a></li>`).join("")}</ul>
     <div class="grid">
 ${muestra.map((p) => tarjeta(p, "")).join("\n")}
     </div>
@@ -298,6 +306,20 @@ ${muestra.map((p) => tarjeta(p, "")).join("\n")}
 }
 
 const slug = (t) => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+function kitHtml(k, raiz) {
+  const items = k.items.map((id) => porId[id]);
+  const total = items.reduce((a, p) => a + p.precio, 0);
+  return `<article class="rut" id="${k.id}">
+  <div class="rut__fotos">${items.map((p) => `<img src="${raiz}${img(p, 1, true)}" alt="" width="440" height="440" loading="lazy" decoding="async">`).join("")}</div>
+  <p class="ceja">${esc(k.para)}</p>
+  <h3>${esc(k.nombre)}</h3>
+  <p class="rut__nota">${esc(k.nota)}</p>
+  <ul>${items.map((p) => `<li><a href="${raiz}p/${p.id}/">${esc(p.nombre)}</a> <span>${esc(p.tamano)}</span></li>`).join("")}</ul>
+  <p class="precio precio--claro"><b>${plata(total)}</b> <span class="kit__n">${items.length} productos</span></p>
+  <button class="btn btn--crema js-rutina" type="button" data-ids="${k.items.join(",")}">Agregar el kit</button>
+</article>`;
+}
 
 // Página con todas las cositas bajo encargo, agrupadas y con buscador.
 function paginaEncargo() {
@@ -321,6 +343,12 @@ function paginaEncargo() {
       <label class="encargo__buscar"><span class="visualmente-oculto">Buscar</span><input class="js-buscar" type="search" placeholder="Busca por producto o marca" autocomplete="off"></label>
       <ul class="encargo__grupos js-grupos"><li><button type="button" class="activo" data-grupo="">Todo <span>${ENCARGO.length}</span></button></li>${GRUPOS_ENCARGO.map((g) => `<li><button type="button" data-grupo="${esc(g)}">${esc(g)} <span>${ENCARGO.filter((x) => x.grupo === g).length}</span></button></li>`).join("")}</ul>
     </div>
+${KITS.length ? `    <section class="kits sec--tinta js-kits" id="kits">
+      <header class="sec__cab"><p class="ceja">Kits armados · ${KITS.length}</p><h2>Kits listos para pedir</h2><p>Combinaciones que se llevan bien. Agregas el kit completo con un toque y te llega todo junto.</p></header>
+      <div class="ruts">
+${KITS.map((k) => kitHtml(k, raiz)).join("\n")}
+      </div>
+    </section>` : ""}
     <p class="encargo__vacio js-vacio" hidden>No encontramos esa cosita. <a href="${waLink("Hola Wets, busco un producto que no encontré en la web:")}" rel="noopener">Pregúntanos por WhatsApp</a> y lo buscamos.</p>
 ${GRUPOS_ENCARGO.map((g) => `    <section class="encargo__grupo js-grupo" id="${slug(g)}" data-grupo="${esc(g)}">
       <h2>${esc(g)}</h2>
@@ -520,12 +548,12 @@ function paginaProducto(p) {
   ].filter(Boolean);
   const faq = [
     [`¿${p.nombre} de ${p.marca} es original?`, `Sí. ${C.marca} lo compra en ${compradoEn(p)} a tiendas y distribuidores autorizados y lo entrega sellado de fábrica${p.vence ? `, con vencimiento ${vence(p.vence)}` : ""}. Si no es original te devolvemos el 100% del dinero.`],
-    [`¿Cuánto cuesta ${p.nombre} en Colombia?`, `En ${C.marca} cuesta ${plata(p.precio)} COP con envío gratis a toda Colombia. Llevando 2 productos tienes ${Math.round(descuentoPara(2) * 100)}% de descuento y con 3 o más, ${Math.round(descuentoPara(3) * 100)}%.`],
+    [`¿Cuánto cuesta ${p.nombre} en Colombia?`, `En ${C.marca} cuesta ${plata(p.precio)} COP con envío gratis a toda Colombia.${p.encargo ? " Es un producto bajo encargo, por eso no tiene descuento por cantidad." : ` Llevando 2 productos tienes ${Math.round(descuentoPara(2) * 100)}% de descuento y con 3 o más, ${Math.round(descuentoPara(3) * 100)}%.`}`],
     ["¿Puedo pagarlo contraentrega?", `Sí. Lo pides sin pagar nada y pagas en efectivo cuando te llega, según la cobertura de la transportadora en tu municipio. La entrega tarda de ${ENVIO_TXT}.`],
     ["¿Cómo se usa?", p.uso],
   ];
   const ofertas = [1, 2, 3].map((n) => {
-    const dn = descuentoPara(n);
+    const dn = p.encargo ? 0 : descuentoPara(n);
     const unidad = Math.round(p.precio * (1 - dn));
     return `<label class="oferta${n === 1 ? " is-elegida" : ""}"><input type="radio" name="cantidad" value="${n}"${n === 1 ? " checked" : ""}><span class="oferta__radio"></span><span><b>${n === 1 ? "1 unidad" : "Lleva " + n}${dn ? ` <span class="tag tag--off">${Math.round(dn * 100)}% menos</span>` : ""}</b><small>${n === 1 ? "Precio normal" : plata(unidad) + " cada uno"}</small></span><span class="oferta__precio">${dn ? `<s>${plata(p.precio * n)}</s>` : ""}${plata(unidad * n)}</span></label>`;
   }).join("\n");
@@ -631,7 +659,7 @@ function legal() {
     <li>Los precios están en pesos colombianos (COP) e incluyen el envío.</li>
     <li>El pago es contraentrega: pagas en efectivo a la transportadora al recibir el pedido, según cobertura en tu municipio.</li>
     <li>Antes de despachar confirmamos el pedido por WhatsApp o llamada. Si no logramos confirmarlo, el pedido no se despacha.</li>
-    <li>Los descuentos por cantidad se calculan sobre el total de unidades del pedido y se muestran antes de confirmar.</li>
+    <li>Los descuentos por cantidad se calculan sobre el total de unidades del pedido y se muestran antes de confirmar. No aplican a los productos bajo encargo.</li>
   </ul>
 
   <h2 id="envios">Envíos</h2>
@@ -671,7 +699,7 @@ ${C.modoDemo ? "\nNota: los precios publicados son de referencia y están por co
 
 - Pago: contraentrega, en efectivo al recibir, según cobertura de la transportadora en el municipio
 - Envío: gratis a toda Colombia, entrega en ${ENVIO_TXT}
-- Descuento por cantidad: ${C.escalas.slice().reverse().map((e) => `${Math.round(e.descuento * 100)}% llevando ${e.desde}${e.desde === Math.max(...C.escalas.map((x) => x.desde)) ? " o más" : ""} productos`).join(", ")}
+- Descuento por cantidad: ${C.escalas.slice().reverse().map((e) => `${Math.round(e.descuento * 100)}% llevando ${e.desde}${e.desde === Math.max(...C.escalas.map((x) => x.desde)) ? " o más" : ""} productos`).join(", ")} (no aplica a los productos bajo encargo)
 - Cambios y devoluciones: ${C.devolucionDias} días desde la entrega; retracto legal de 5 días hábiles
 - Originalidad: productos comprados en Estados Unidos, sellados de fábrica, con lote y vencimiento visibles; devolución del 100% si no es original
 - Pedido: formulario "Pedir y pagar al recibir" en cada producto, sin crear cuenta${C.whatsapp ? `\n- WhatsApp: +${C.whatsapp}` : ""}
@@ -689,7 +717,11 @@ ${ENCARGO.length ? `## Cositas bajo encargo
 
 Productos originales de Estados Unidos que se piden para el cliente al confirmar; llegan en ${ENCARGO_TXT}, con pago contraentrega. Lista completa: ${C.url}/encargo/
 
-${ENCARGO.map((p) => `- [${p.nombre} · ${p.marca}](${urlP(p)}): ${p.tamano}. ${plata(p.precio)} COP. ${p.grupo}.`).join("\n")}
+${KITS.length ? `Kits armados (precio = suma de sus productos):
+
+${KITS.map((k) => `- ${k.nombre}: ${k.items.map((id) => porId[id].nombre).join(" + ")}. ${plata(k.items.reduce((a, id) => a + porId[id].precio, 0))} COP. ${C.url}/encargo/#${k.id}`).join("\n")}
+
+` : ""}${ENCARGO.map((p) => `- [${p.nombre} · ${p.marca}](${urlP(p)}): ${p.tamano}. ${plata(p.precio)} COP. ${p.grupo}.`).join("\n")}
 
 ` : ""}## Datos
 
@@ -723,7 +755,7 @@ const catalogoJson = () => JSON.stringify({
   envio: { costo: 0, dias_habiles: [C.envio.diasMin, C.envio.diasMax] },
   descuento_por_cantidad: C.escalas.map((e) => ({ desde_unidades: e.desde, porcentaje: Math.round(e.descuento * 100) })),
   devolucion_dias: C.devolucionDias,
-  productos: TODOS.map((p) => ({ id: p.id, nombre: p.nombre, marca: p.marca, categoria: p.cat, ...(p.encargo && { bajo_encargo: true, grupo: p.grupo, entrega_dias_habiles: [C.encargo.diasMin, C.encargo.diasMax] }), presentacion: p.tamano, precio: p.precio, ...(p.antes && { precio_antes: p.antes }), disponible: true, comprado_en: compradoEn(p), ...(p.pais && { pais_marca: p.pais }), ...(p.fuente && { fuente: p.fuente }), ...(p.vence && { vence: p.vence }), url: urlP(p), ...(conFotos(p) && { imagenes: FOTOS[p.id].map((n) => `${C.url}/${img(p, n)}`) }), descripcion: (p.detalle || [p.desc]).join(" "), uso: p.uso, datos: p.claves })),
+  productos: TODOS.map((p) => ({ id: p.id, nombre: p.nombre, marca: p.marca, categoria: p.cat, ...(p.encargo && { bajo_encargo: true, descuento_por_cantidad: false, grupo: p.grupo, entrega_dias_habiles: [C.encargo.diasMin, C.encargo.diasMax] }), presentacion: p.tamano, precio: p.precio, ...(p.antes && { precio_antes: p.antes }), disponible: true, comprado_en: compradoEn(p), ...(p.pais && { pais_marca: p.pais }), ...(p.fuente && { fuente: p.fuente }), ...(p.vence && { vence: p.vence }), url: urlP(p), ...(conFotos(p) && { imagenes: FOTOS[p.id].map((n) => `${C.url}/${img(p, n)}`) }), descripcion: (p.detalle || [p.desc]).join(" "), uso: p.uso, datos: p.claves })),
 }, null, 1);
 
 // Datos mínimos que necesita el carrito en el navegador.

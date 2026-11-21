@@ -46,6 +46,8 @@ Para actualizarlos, baja su catálogo (`https://www.lascositasdemariae.com/produ
 node herramientas/encargo.mjs <productos.json>
 ```
 
+Los productos bajo encargo no tienen descuento por cantidad ni cuentan para alcanzarlo. Los kits armados están en `datos/kits-encargo.mjs` (ids de `datos/encargo.json`); su precio es la suma de sus productos y el build quita del kit lo que se haya agotado.
+
 La herramienta deja solo los disponibles, los agrupa, toma hasta 3 fotos por producto y las pasa a fondo rosa. Las fotos que ya existen no se repiten. Shopify limita las descargas seguidas: si responde 429, espera unos minutos.
 
 ## Antes de vender

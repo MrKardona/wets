@@ -6,7 +6,7 @@
 
 - Pago: contraentrega, en efectivo al recibir, según cobertura de la transportadora en el municipio
 - Envío: gratis a toda Colombia, entrega en 2 a 5 días hábiles
-- Descuento por cantidad: 5% llevando 2 productos, 10% llevando 3 o más productos
+- Descuento por cantidad: 5% llevando 2 productos, 10% llevando 3 o más productos (no aplica a los productos bajo encargo)
 - Cambios y devoluciones: 30 días desde la entrega; retracto legal de 5 días hábiles
 - Originalidad: productos comprados en Estados Unidos, sellados de fábrica, con lote y vencimiento visibles; devolución del 100% si no es original
 - Pedido: formulario "Pedir y pagar al recibir" en cada producto, sin crear cuenta
@@ -48,6 +48,20 @@
 ## Cositas bajo encargo
 
 Productos originales de Estados Unidos que se piden para el cliente al confirmar; llegan en 5 a 10 días hábiles, con pago contraentrega. Lista completa: https://mrkardona.github.io/wets/encargo/
+
+Kits armados (precio = suma de sus productos):
+
+- Kit Sueño profundo: Melatonina NATROL 10mg + Glicinato de Magnesio + Ashwagandha Carlyle + Spray con Melatonina y Aceites Esenciales Dr. Teals. $292.000 COP. https://mrkardona.github.io/wets/encargo/#kit-sueno-profundo
+- Kit Cabello fuerte: Aceite Capilar Romero & Menta Difeel + Aceite Capilar de Biotina Difeel + Hair, Skin & Nails Advanced 2X Biotin. $237.000 COP. https://mrkardona.github.io/wets/encargo/#kit-cabello-fuerte
+- Kit Belleza desde adentro: Colágeno Marino Peptidos + Ácido Hialurónico NEOCELL + Biotina Nature's Bounty 10.000mcg + Vitamina C Liposomal Carlyle 2.200mg. $317.000 COP. https://mrkardona.github.io/wets/encargo/#kit-belleza-desde-adentro
+- Kit Defensas: Vitamina C Carlyle 2.000mg + Picolinato de Zinc Nutricost 50mg + Vitamina D3 + K2 Deal Supplement. $407.000 COP. https://mrkardona.github.io/wets/encargo/#kit-defensas
+- Kit Digestión ligera: Probióticos de Mujer Trunature + Enzimas Digestivas + Prebióticos y Probióticos Horbaach 1.000mg + Vinagre de Sidra de Manzana 2.400mg Horbaach. $362.100 COP. https://mrkardona.github.io/wets/encargo/#kit-digestion-ligera
+- Kit Ducha Vanilla Cashmere: Jabón Corporal EOS Vanilla Cashmere + Crema Hidratante Corporal EOS Vanilla Cashmere + Aceite de Afeitar EOS Vanilla Cashmere. $259.000 COP. https://mrkardona.github.io/wets/encargo/#kit-ducha-vanilla-cashmere
+- Kit Glow corporal: Exfoliante Corporal Dove Vainilla Sugar & Shea Butter + Crema Corporal Hidratante Vaseline Cocoa Radiant + Aceite Corporal Golden Hour Glow Vaseline. $203.000 COP. https://mrkardona.github.io/wets/encargo/#kit-glow-corporal
+- Kit Mamá: Bálsamo de Tratamiento Intensivo Contra las Estrías Palmers + Crema Corporal de masaje con fórmula de manteca de cacao para estrías Palmer's + Multivitamínico Prenatal Carlyle. $272.000 COP. https://mrkardona.github.io/wets/encargo/#kit-mama
+- Kit Labios: Hidratante de Labios Lip Therapy Rosé Vaseline + Hidratante de Labios Lip Therapy Berry Much Vaseline + Hidratante de Labios Creme Brulee Vaseline. $72.000 COP. https://mrkardona.github.io/wets/encargo/#kit-labios
+- Kit Energía y corazón: Omega-3 Fish Oil NOW + Súper Complejo B Kirkland + CoQ10 Kirkland 300mg. $427.000 COP. https://mrkardona.github.io/wets/encargo/#kit-energia
+- Kit Rostro básico: Limpiador Facial Espumoso CeraVe + Loción Hidratante para Piel seca a Muy Seca CeraVe + Protector Solar Neutrogena SPF 70. $238.100 COP. https://mrkardona.github.io/wets/encargo/#kit-rostro-cerave
 
 - [Aceite de Orégano Carlyle 4.000mg · Carlyle](https://mrkardona.github.io/wets/p/aceite-de-oregano-carlyle-4-000mg-150-softgels/): 150 softgels. $99.000 COP. Vitaminas y suplementos.
 - [Aceite de Orégano Microingredients · Microingredients](https://mrkardona.github.io/wets/p/aceite-de-oregano-microingredients-300-capsulas/): 300 cápsulas. $219.000 COP. Vitaminas y suplementos.
