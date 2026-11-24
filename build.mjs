@@ -126,6 +126,17 @@ const ICO = {
   gota: `<svg class="logo__gota" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0c3 4.4 6 7 6 10.2A6 6 0 0 1 0 10.2C0 7 3 4.400 6 0z"/></svg>`,
 };
 
+// Menú principal: [enlace, nombre, ícono en assets/menu/<ícono>.webp]. "encargo" solo sale si hay productos bajo encargo.
+const MENU = [
+  ["#suplementos", "Suplementos", "suplementos"],
+  ["#skincare", "Skincare", "skincare"],
+  ["encargo/", "Bajo encargo", "encargo"],
+  ["#destacados", "Destacados", "destacados"],
+  ["#rutinas", "Rutinas", "rutinas"],
+  ["#originalidad", "Originalidad", "originalidad"],
+  ["#preguntas", "Preguntas", "preguntas"],
+];
+
 function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "", jsonld = [], imagen = "assets/marca/compartir.jpg?v=2" }) {
   const canonica = C.url + ruta;
   const g = C.geo;
@@ -171,13 +182,7 @@ ${jsonld.map(ld).join("\n")}
   <div class="wrap cab__in">
     <a class="logo" href="${raiz || "./"}" aria-label="${esc(C.marca)}, ir al inicio"><img src="${raiz}assets/marca/logo.webp" alt="${esc(C.marca)} · Vitaminas y suplementos" width="95" height="60"></a>
     <nav class="cab__nav" aria-label="Principal">
-      <a href="${raiz}#suplementos">Suplementos</a>
-      <a href="${raiz}#skincare">Skincare</a>${ENCARGO.length ? `
-      <a href="${raiz}encargo/">Bajo encargo</a>` : ""}
-      <a href="${raiz}#destacados">Destacados</a>
-      <a href="${raiz}#rutinas">Rutinas</a>
-      <a href="${raiz}#originalidad">Originalidad</a>
-      <a href="${raiz}#preguntas">Preguntas</a>
+${MENU.filter(([, , ico]) => ico !== "encargo" || ENCARGO.length).map(([href, nombre, ico]) => `      <a href="${raiz}${href}"><img class="cab__ico" src="${raiz}assets/menu/${ico}.webp" alt="" width="24" height="24">${nombre}</a>`).join("\n")}
     </nav>
     <button class="cab__carro js-abrir-carro" type="button" aria-label="Abrir el carrito de compras">${ICO.bolsa}<span>Carrito</span><b class="cab__cuenta js-cuenta" hidden>0</b></button>
   </div>
