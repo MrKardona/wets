@@ -100,11 +100,19 @@
     const c = calcular(items);
     const siguiente = CFG.escalas.slice().reverse().find((e) => e.desde > c.conDescuento);
     const tope = Math.max.apply(null, CFG.escalas.map((e) => e.desde));
-    const enQue = c.hayEncargo ? ' en los productos Wets (no aplica a los bajo encargo)' : ' en todo el pedido';
+    // Aviso del descuento por cantidad: título, barra con los escalones y una nota de a qué aplica.
+    const pct = (x) => Math.round(x * 100) + '%';
+    const faltan = siguiente ? siguiente.desde - c.conDescuento : 0;
+    const titulo = !siguiente ? '¡Listo! Tienes <b>' + pct(c.d) + ' de descuento</b>'
+      : c.d ? 'Ya tienes ' + pct(c.d) + '. Agrega <b>' + faltan + ' producto más</b> y sube a <b>' + pct(siguiente.descuento) + '</b>'
+      : 'Agrega <b>' + faltan + ' producto' + (faltan > 1 ? 's' : '') + ' más</b> y ahorra <b>' + pct(siguiente.descuento) + '</b>';
+    const pasos = CFG.escalas.slice().reverse().map((e) =>
+      '<li' + (c.conDescuento >= e.desde ? ' class="hecho"' : '') + '><b>' + pct(e.descuento) + '</b>' + e.desde + (e.desde === tope ? ' o más' : '') + ' productos</li>').join('');
+    const nota = c.hayEncargo ? 'Los productos bajo encargo no tienen descuento ni cuentan para alcanzarlo.' : 'El descuento se aplica a todo el pedido.';
     const meta = !c.conDescuento ? ''
-      : siguiente
-      ? '<div class="meta">Agrega ' + (siguiente.desde - c.conDescuento) + ' producto' + (siguiente.desde - c.conDescuento > 1 ? 's' : '') + ' Wets más y ahorra ' + Math.round(siguiente.descuento * 100) + '%' + enQue + '<div class="meta__barra"><i style="width:' + Math.round(c.conDescuento / tope * 100) + '%"></i></div></div>'
-      : '<div class="meta meta--ok">Tienes ' + Math.round(c.d * 100) + '% de descuento por cantidad' + (c.hayEncargo ? ' en los productos Wets' : '') + '<div class="meta__barra"><i style="width:100%"></i></div></div>';
+      : '<div class="meta' + (siguiente ? '' : ' meta--ok') + '"><p class="meta__tit">' + titulo + '</p>'
+        + '<div class="meta__barra"><i style="width:' + Math.round(Math.min(c.conDescuento, tope) / tope * 100) + '%"></i></div>'
+        + '<ol class="meta__pasos">' + pasos + '</ol><p class="meta__nota">' + nota + '</p></div>';
     const lineas = c.lineas.map((l) =>
       '<div class="item"><a href="' + url(l.id) + '" tabindex="-1"><img src="' + foto(l.id) + '" alt="" width="64" height="64"></a>'
       + '<div><a href="' + url(l.id) + '">' + escapar(l.p.n) + '</a><small>' + escapar(l.p.m + ' · ' + l.p.t + (l.p.e ? ' · Bajo encargo' : '')) + '</small>'

@@ -549,3 +549,18 @@ select.control{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.
 @media (max-width:859px){.cab__nav{gap:.15rem;padding-top:2px}.cab__nav a{padding:5px 12px 5px 6px}.cab__ico{width:22px;height:22px}}
 @media (prefers-reduced-motion:reduce){.cab__nav a,.cab__nav a::before,.cab__ico{transition:none}.cab__nav a:hover::after{animation:none}}
 @media (min-width:860px) and (max-width:1179px){.cab__nav{flex:1 1 auto;min-width:0;gap:0;-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent);font-size:.88rem;overflow-x:auto;scrollbar-width:none;padding:6px 0}.cab__nav::-webkit-scrollbar{display:none}.cab__nav a{flex:none;padding:5px 10px 5px 6px;gap:5px}.cab__ico{width:20px;height:20px}}
+
+/* Aviso del descuento por cantidad en el carrito */
+.meta{padding:14px 16px 12px;border-radius:16px;font-weight:500;font-size:.9rem;line-height:1.35;color:var(--tinta)}
+.meta__tit{margin:0;font-size:.95rem;font-weight:600}
+.meta__tit b{color:var(--fucsia);font-weight:700}
+.meta__barra{margin-top:10px}
+.meta__pasos{display:flex;justify-content:space-between;gap:10px;list-style:none;margin:8px 0 0;padding:0;font-size:.78rem;color:rgba(59,10,42,.55)}
+.meta__pasos li{display:flex;align-items:baseline;gap:5px}
+.meta__pasos li:last-child{text-align:right}
+.meta__pasos b{font-weight:700;color:rgba(59,10,42,.7)}
+.meta__pasos .hecho,.meta__pasos .hecho b{color:var(--fucsia)}
+.meta__nota{margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--linea);font-size:.78rem;color:rgba(59,10,42,.6)}
+.meta--ok .meta__tit,.meta--ok .meta__tit b,.meta--ok .meta__pasos .hecho,.meta--ok .meta__pasos .hecho b{color:var(--verde)}
+.meta__pasos{display:flex;justify-content:space-between;height:auto;margin-top:7px}
+.meta__pasos li{gap:4px;white-space:nowrap}
