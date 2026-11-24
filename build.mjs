@@ -137,7 +137,7 @@ const MENU = [
   ["#preguntas", "Preguntas", "preguntas"],
 ];
 
-function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "", jsonld = [], imagen = "assets/marca/compartir.jpg?v=2" }) {
+function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "", jsonld = [], imagen = "assets/marca/compartir.jpg?v=3" }) {
   const canonica = C.url + ruta;
   const g = C.geo;
   return `<!doctype html>
@@ -165,7 +165,11 @@ function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "",
 <meta property="og:url" content="${canonica}">
 <meta property="og:locale" content="es_CO">
 <meta property="og:site_name" content="${esc(C.marca)}">
-<meta property="og:image" content="${C.url}/${imagen}">
+<meta property="og:image" content="${C.url}/${imagen}">${imagen.startsWith("assets/marca/compartir") ? `
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(C.marca)}: suplementos y skincare originales de USA, envío gratis a toda Colombia y pago contraentrega">` : ""}
 <meta name="twitter:card" content="summary_large_image">
 ${extra}<link rel="icon" type="image/svg+xml" href="${raiz}assets/favicon.svg">
 <link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/bricolage-grotesque.woff2" crossorigin>
@@ -262,7 +266,7 @@ const tiendaLd = () => ({
   url: C.url + "/",
   slogan: C.lema,
   logo: C.url + "/assets/marca/logo-grande.webp",
-  image: C.url + "/assets/marca/compartir.jpg?v=2",
+  image: C.url + "/assets/marca/compartir.jpg?v=3",
   description: "Tienda en línea de suplementos y productos para el cuidado de la piel originales, importados de Estados Unidos, con envío gratis y pago contraentrega en Colombia.",
   areaServed: { "@type": "Country", name: "Colombia" },
   currenciesAccepted: "COP",
@@ -417,7 +421,7 @@ ${PRODUCTOS.filter((p) => p.cat === cat).map((p) => tarjeta(p, raiz)).join("\n")
     raiz,
     ruta: "/",
     titulo: `${C.marca} | Suplementos y skincare originales de USA en Colombia`,
-    descripcion: `Suplementos y skincare 100% originales importados de Estados Unidos: ${marcas.slice(0, 4).join(", ")} y más. Envío gratis a toda Colombia y pago contraentrega.`,
+    descripcion: `Más de ${Math.floor(TODOS.length / 10) * 10} suplementos y productos de skincare 100% originales de USA: ${marcas.slice(0, 4).join(", ")} y más. Envío gratis a toda Colombia y pagas al recibir.`,
     jsonld,
   }) + `
 <section class="hero">

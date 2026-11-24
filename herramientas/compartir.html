@@ -1,0 +1,50 @@
+<!doctype html>
+<!-- Imagen para compartir (1200x630). Se renderiza con: node herramientas/compartir.mjs -->
+<html lang="es">
+<meta charset="utf-8">
+<style>
+  @font-face{font-family:"Bricolage Grotesque";src:url(../assets/fonts/bricolage-grotesque.woff2) format("woff2");font-weight:200 800}
+  @font-face{font-family:"Figtree";src:url(../assets/fonts/figtree.woff2) format("woff2");font-weight:300 900}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{position:relative;font-family:Figtree,sans-serif;color:#3B0A2A;background:#FCE4EE url(../assets/img/gotas.webp) center/cover}
+  .velo{position:absolute;inset:0;background:linear-gradient(90deg,#FFF5F8 0%,rgba(255,245,248,.96) 44%,rgba(255,240,246,.55) 64%,rgba(255,240,246,0) 82%)}
+  .txt{position:absolute;left:64px;top:80px;width:650px}
+  .logo{height:112px;display:block;margin-left:-6px;filter:drop-shadow(0 10px 18px rgba(59,10,42,.25))}
+  h1{margin-top:28px;font:800 55px/1.05 "Bricolage Grotesque",sans-serif;letter-spacing:-.025em}
+  h1 em{font-style:normal;background:linear-gradient(115deg,#FF6FAE,#E0338A 45%,#B5179E);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:16px;font-size:25px;font-weight:500;color:#5A2A47}
+  .sellos{display:flex;gap:12px;margin-top:28px}
+  .sellos span{display:flex;align-items:center;gap:9px;padding:10px 18px 10px 10px;border-radius:999px;background:#fff;box-shadow:0 8px 20px -10px rgba(59,10,42,.35);font-size:21px;font-weight:700;white-space:nowrap}
+  .sellos img,.sellos svg{width:34px;height:34px}
+  .fotos{position:absolute;right:46px;top:58px;width:440px;height:514px}
+  .f{position:absolute;width:218px;height:218px;border-radius:28px;overflow:hidden;border:6px solid #fff;box-shadow:0 22px 40px -18px rgba(59,10,42,.5)}
+  .f img{width:100%;height:100%;object-fit:cover;display:block}
+  .f1{left:0;top:18px;transform:rotate(-5deg)}
+  .f2{left:214px;top:0;transform:rotate(4deg)}
+  .f3{left:14px;top:262px;transform:rotate(3deg)}
+  .f4{left:226px;top:240px;transform:rotate(-4deg)}
+  .pie{position:absolute;left:64px;bottom:42px;font-size:20px;font-weight:600;color:#6E3D59}
+  .pie b{color:#D6177A}
+</style>
+<body>
+  <div class="velo"></div>
+  <div class="txt">
+    <img class="logo" src="../assets/marca/logo-grande.webp" alt="">
+    <h1>Suplementos y skincare<br><em>originales</em> de USA</h1>
+    <p class="sub">Llegan a toda Colombia en 2 a 5 días hábiles</p>
+    <div class="sellos">
+      <span><img src="../assets/menu/originalidad.webp" alt="">100% originales</span>
+      <span><img src="../assets/menu/encargo.webp" alt="">Envío gratis</span>
+      <span><svg viewBox="0 0 34 34"><rect x="2" y="8" width="30" height="18" rx="5" fill="#1F8A4C"/><circle cx="17" cy="17" r="5" fill="#fff"/><circle cx="17" cy="17" r="2.400" fill="#1F8A4C"/><rect x="6" y="12" width="3" height="10" rx="1.500" fill="#7ED7A1"/><rect x="25" y="12" width="3" height="10" rx="1.500" fill="#7ED7A1"/></svg>Contraentrega</span>
+    </div>
+  </div>
+  <div class="fotos">
+    <div class="f f1"><img src="../assets/fotos/crema-collagen-jelly-medicube-110ml-1.webp" alt=""></div>
+    <div class="f f2"><img src="../assets/fotos/gomitas-cabello-piel-unas-natures-bounty-advanced-80-1.webp" alt=""></div>
+    <div class="f f3"><img src="../assets/fotos/centrum-mujer-200-tabletas-1.webp" alt=""></div>
+    <div class="f f4"><img src="../assets/fotos/serum-pdrn-anua-capsule-100-30ml-1.webp" alt=""></div>
+  </div>
+  <p class="pie"><b>+440 productos</b> · Centrum, Medicube, Nature's Bounty, Anua y más</p>
+</body>
+</html>

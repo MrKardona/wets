@@ -15,6 +15,7 @@ node build.mjs
 | `datos/config.mjs` | WhatsApp, dominio, datos legales, escalas de descuento, días de envío y devolución, puente de pedidos |
 | `datos/productos.mjs` | Productos, objetivos ("¿Qué quieres cuidar?"), rutinas armadas, cartas del hero y destacados |
 | `herramientas/fotos.mjs` | Convierte una imagen en las fotos del catálogo (WebP 900 y 440 px) |
+| `herramientas/compartir.html` · `compartir.mjs` | La imagen que sale al compartir el enlace (WhatsApp, redes). Se edita el HTML y se corre `node herramientas/compartir.mjs`; luego se sube el `?v=` de `compartir.jpg` en `build.mjs` |
 | `assets/wets.css` · `assets/wets.js` | Estilos y motor de compra (se editan a mano) |
 | `build.mjs` | Genera `index.html`, `p/<producto>/`, `legal/`, `sitemap.xml`, `robots.txt`, `llms.txt`, `catalogo.json` |
 
