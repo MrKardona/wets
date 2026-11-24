@@ -1,27 +1,26 @@
 /* Wets · hoja de estilos única. Rosa empolvado, ciruela profunda y fucsia. */
-@font-face{font-family:"Bodoni Moda";src:url(fonts/bodoni-moda-normal.woff2) format("woff2");font-weight:400 800;font-style:normal;font-display:swap}
-@font-face{font-family:"Bodoni Moda";src:url(fonts/bodoni-moda-italic.woff2) format("woff2");font-weight:400 800;font-style:italic;font-display:swap}
-@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(fonts/bricolage-grotesque.woff2) format("woff2");font-weight:200 800;font-style:normal;font-display:swap}
+@font-face{font-family:"Figtree";src:url(fonts/figtree.woff2) format("woff2");font-weight:300 900;font-style:normal;font-display:swap}
 
 :root{
   --papel:#FFF5F8;--papel-2:#FCE4EE;--blanco:#FFFFFF;
-  --tinta:#3B0A2A;--tinta-2:#82506B;--linea:rgba(59,10,42,.12);
+  --tinta:#3B0A2A;--tinta-2:#6E3D59;--linea:rgba(59,10,42,.12);
   --sello:#E0338A;--sello-2:#C21F72;--agua:#FAD3E3;--agua-2:#B42A70;--verde:#1F8A4C;
   --rosa:#FF8FC1;--lila:#EBD7FF;--fucsia:#D6177A;
   --grad:linear-gradient(115deg,#FF6FAE 0%,#E0338A 45%,#B5179E 100%);
   --grad-suave:linear-gradient(160deg,#FFF5F8 0%,#FCE4EE 55%,#F6D9F5 100%);
   --r:18px;--sombra:0 1px 2px rgba(59,10,42,.06),0 12px 32px -12px rgba(59,10,42,.22);
-  --f-t:"Bodoni Moda","Bodoni 72",Didot,Georgia,serif;
-  --f-c:"Instrument Sans",ui-sans-serif,system-ui,sans-serif;
-  --f-m:"Instrument Sans",ui-sans-serif,system-ui,sans-serif;
+  --f-t:"Bricolage Grotesque","Figtree",ui-sans-serif,system-ui,sans-serif;
+  --f-c:"Figtree",ui-sans-serif,system-ui,sans-serif;
+  --f-m:"Figtree",ui-sans-serif,system-ui,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
-body{margin:0;overflow-x:clip;background:var(--papel);color:var(--tinta);font:400 1rem/1.55 var(--f-c);-webkit-font-smoothing:antialiased;
+body{margin:0;overflow-x:clip;background:var(--papel);color:var(--tinta);font:400 1.0625rem/1.6 var(--f-c);-webkit-font-smoothing:antialiased;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .1 0 0 0 0 .3 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E")}
 img,svg{max-width:100%;height:auto;display:block}
 a{color:inherit}
-h1,h2,h3{font-family:var(--f-t);font-weight:700;font-variation-settings:"opsz" 20;letter-spacing:-.025em;line-height:1.08;margin:0;text-wrap:balance}
+h1,h2,h3{font-family:var(--f-t);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:0;text-wrap:balance}
 p{margin:0}
 button{font:inherit;color:inherit;cursor:pointer}
 [hidden]{display:none!important}
@@ -29,7 +28,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2.5px solid var(--sello);outline-offset:3px;border-radius:6px}
 .wrap{width:min(1180px,100% - 2.5rem);margin-inline:auto}
 .salto{position:absolute;left:-999px}.salto:focus{left:12px;top:12px;z-index:99;background:var(--tinta);color:var(--papel);padding:10px 14px;border-radius:10px}
-.ceja{font:600 .7rem/1.3 var(--f-m);letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-2)}
+.ceja{font:700 .76rem/1.3 var(--f-m);letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-2)}
 .ico{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
 /* progreso de lectura */
@@ -80,9 +79,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes titila{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:url(img/gotas.webp) 70% 40%/cover no-repeat;opacity:.55;mix-blend-mode:multiply;-webkit-mask-image:linear-gradient(100deg,transparent 30%,#000 80%);mask-image:linear-gradient(100deg,transparent 30%,#000 80%);transform:translate3d(0,calc(var(--s,0)*60px),0)}
 .hero__grid{display:grid;gap:1.5rem;align-items:center}
-.hero h1{font-size:clamp(2.55rem,7.4vw,5.3rem);font-weight:600;line-height:.96;letter-spacing:-.045em;margin:.9rem 0 1.2rem}
-.hero h1{font-weight:600;font-variation-settings:"opsz" 28;letter-spacing:-.03em}
-.hero h1 em{font-style:italic;font-weight:600;color:var(--fucsia)}
+.hero h1{font-size:clamp(2.55rem,7.4vw,5.3rem);font-weight:600;line-height:.96;letter-spacing:-.035em;margin:.9rem 0 1.2rem}
+.hero h1{font-weight:600;letter-spacing:-.03em}
+.hero h1 em{font-style:normal;font-weight:800;color:var(--fucsia)}
 .hero__sub{font-size:1.1rem;max-width:34rem;color:var(--tinta-2)}
 .hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin:1.7rem 0 1.4rem}
 .hero__puntos{display:flex;flex-wrap:wrap;gap:8px 20px;list-style:none;padding:0;margin:0;font-weight:600;font-size:.92rem}
@@ -174,7 +173,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .obj.activo{background:var(--grad);border-color:transparent}
 
 /* tarjetas: cartas que se inclinan con el cursor y cambian de foto */
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;perspective:1500px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;perspective:1500px}
 .card{--rx:0deg;--ry:0deg;--mx:50%;--my:0%;position:relative;display:flex;flex-direction:column;background:var(--blanco);border:1px solid var(--linea);border-radius:22px;padding:8px;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .35s}
 .card.mueve{transition:transform .09s linear,box-shadow .35s}
 .card:hover{z-index:2;border-color:rgba(255,143,193,.8);box-shadow:0 0 0 3px rgba(255,143,193,.25),0 30px 50px -20px rgba(214,23,122,.42)}
@@ -418,7 +417,7 @@ select.control{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.
 @media (min-width:480px){.ce__fila{grid-template-columns:1fr 1fr}}
 @media (min-width:620px){
   .objs{grid-template-columns:repeat(4,1fr)}
-  .grid{grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
   .ruts{grid-template-columns:repeat(2,1fr)}
   .cats{grid-template-columns:1fr 1fr}
   .pasos{grid-template-columns:repeat(3,1fr)}
@@ -431,7 +430,7 @@ select.control{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.
 }
 @media (min-width:860px){
   .hero__grid{grid-template-columns:1.12fr .88fr}
-  .grid{grid-template-columns:repeat(4,1fr)}
+  .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
   .ruts{grid-template-columns:repeat(4,1fr)}
   .quiz__grid{grid-template-columns:1fr 1.05fr;gap:3rem}
   .orig{display:grid;grid-template-columns:.85fr 1.15fr;gap:0 3rem;align-items:start}
@@ -564,3 +563,22 @@ select.control{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.
 .meta--ok .meta__tit,.meta--ok .meta__tit b,.meta--ok .meta__pasos .hecho,.meta--ok .meta__pasos .hecho b{color:var(--verde)}
 .meta__pasos{display:flex;justify-content:space-between;height:auto;margin-top:7px}
 .meta__pasos li{gap:4px;white-space:nowrap}
+
+/* Legibilidad: ningún texto por debajo de ~12 px y títulos con más cuerpo */
+.aviso{font-size:.78rem}
+@media (max-width:859px){.aviso{font-size:.75rem;letter-spacing:.03em}}
+.mano__c small{font-size:.72rem}
+.rail__txt small{font-size:.74rem}
+.obj__n,.quiz__paso,.suma h3{font-size:.76rem}
+.card__marca{font-size:.76rem;letter-spacing:.06em}
+.card__nota,.gal__nota,.barra small,.encargo__grupos span{font-size:.82rem}
+.tag{font-size:.76rem}
+.pie h2,.legal__fecha{font-size:.8rem}
+.demo{font-size:.76rem}
+.hero h1{font-weight:700;line-height:1.02}
+.sec__cab h2,.pp__info h1,.encargo .sec__cab h1{font-weight:700}
+.card__nombre,.faq__item h3,.orig__lista b,.pasos b{font-weight:700}
+/* Sin desplazamiento lateral aunque algo mida 100vw (barras de desplazamiento clásicas) */
+html{overflow-x:clip}
+.card{min-width:0}
+.card__nombre{overflow-wrap:anywhere}

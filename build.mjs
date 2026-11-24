@@ -168,8 +168,8 @@ function cabeza({ raiz, titulo, descripcion, ruta, tipo = "website", extra = "",
 <meta property="og:image" content="${C.url}/${imagen}">
 <meta name="twitter:card" content="summary_large_image">
 ${extra}<link rel="icon" type="image/svg+xml" href="${raiz}assets/favicon.svg">
-<link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/bodoni-moda-normal.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/instrument-sans.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/bricolage-grotesque.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="${raiz}assets/fonts/figtree.woff2" crossorigin>
 <link rel="stylesheet" href="${raiz}assets/wets.css">
 <script>document.documentElement.className='js'</script>
 ${jsonld.map(ld).join("\n")}
