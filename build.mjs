@@ -169,7 +169,7 @@ ${jsonld.map(ld).join("\n")}
 <p class="aviso">Envío gratis a toda Colombia <i>·</i> Pagas al recibir<span class="aviso__x"> <i>·</i> 100% originales de USA</span></p>
 <header class="cab">
   <div class="wrap cab__in">
-    <a class="logo" href="${raiz || "./"}" aria-label="${esc(C.marca)}, ir al inicio"><img src="${raiz}assets/marca/logo.webp" alt="${esc(C.marca)} · Originales de USA" width="103" height="60"></a>
+    <a class="logo" href="${raiz || "./"}" aria-label="${esc(C.marca)}, ir al inicio"><img src="${raiz}assets/marca/logo.webp" alt="${esc(C.marca)} · Vitaminas y suplementos" width="95" height="60"></a>
     <nav class="cab__nav" aria-label="Principal">
       <a href="${raiz}#suplementos">Suplementos</a>
       <a href="${raiz}#skincare">Skincare</a>${ENCARGO.length ? `
@@ -197,7 +197,7 @@ function pie(raiz) {
 <footer class="pie">
   <div class="wrap pie__grid">
     <div>
-      <a class="logo logo--pie" href="${raiz || "./"}"><img src="${raiz}assets/marca/logo-grande.webp" alt="${esc(C.marca)} · Originales de USA" width="190" height="110" loading="lazy" decoding="async"></a>
+      <a class="logo logo--pie" href="${raiz || "./"}"><img src="${raiz}assets/marca/logo-grande.webp" alt="${esc(C.marca)} · Vitaminas y suplementos" width="190" height="120" loading="lazy" decoding="async"></a>
       <p>${esc(C.lema)} Suplementos y productos para el cuidado de la piel importados de Estados Unidos, con envío gratis y pago contraentrega en Colombia.</p>
     </div>
     <nav aria-label="Tienda"><h2>Tienda</h2><a href="${raiz}#suplementos">Suplementos</a><a href="${raiz}#skincare">Skincare</a>${ENCARGO.length ? `<a href="${raiz}encargo/">Cositas bajo encargo</a>` : ""}<a href="${raiz}#rutinas">Rutinas armadas</a><a href="${raiz}#quiz">Armar mi rutina</a></nav>
@@ -769,7 +769,8 @@ const catalogoJs = () => "window.WETS=" + JSON.stringify({
   objg: Object.fromEntries(OBJETIVOS.map((o) => [o.id, o.grupo])),
 }) + ";";
 
-const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#3B0A2A"/><path d="M16 5c5 7.200 9 10.800 9 15.500a9 9 0 0 1-18 0C7 15.800 11 12.200 16 5z" fill="#FF6FAE"/></svg>`;
+// Favicon con los elementos del logo: insignia negra, W blanca, hojas verdes y curva rosada.
+const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#111"/><path d="M4.500 12h4.200l1.700 8.200L13.600 12h3.300l1.100 8.200L21.400 12h4.200l-6 13h-3.500l-1-7.400-3.400 7.400H8.200z" fill="#fff"/><path d="M22 10.500c.300-3.200 2.600-5.400 6-5.500-.200 3.300-2.500 5.500-6 5.500z" fill="#7ED321"/><path d="M21.400 10.300c-2.400-.600-3.700-2.300-3.600-4.500 2.300.300 3.600 2 3.600 4.500z" fill="#5DB31A"/><path d="M6 28.300c6-1.800 13-2.200 20-1.300-7 0-13.500.600-20 2.300z" fill="#E0157A"/></svg>`;
 
 const noEncontrada = () => cabeza({ raiz: `${new URL(C.url).pathname.replace(/\/$/, "")}/`, ruta: "/404.html", titulo: `Página no encontrada | ${C.marca}`, descripcion: "Esta página no existe." }) + `
 <div class="wrap legal"><h1>Esta página no existe</h1><p>Puede que el producto haya cambiado de dirección. <a href="${C.url}/">Volver a la tienda</a>.</p></div>
